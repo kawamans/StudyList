@@ -8,4 +8,4 @@
 
 ### [集団開発(team-development-project)](./team-development-project)
 チーム開発演習で作成したアプリです
-現在PHPのみ、1月にJava開発予定
+現在PHPのみ、 **1月にJava開発予定**
