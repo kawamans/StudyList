@@ -1,0 +1,26 @@
+<?php require '../header.php'; ?>
+<p>購入数を選択してください。</p>
+<form action="select-for-output.php" method="post">
+    <select name="count">
+        <?php
+            for ($i=0; $i<10; $i++) {
+                echo '<option value="', $i, '">', $i, '</option>';
+            }
+        ?>
+    </select>
+    <p><input type="submit" value="確定"></p>
+</form>
+<?php
+    for ($j=1; $j<=5; $j++) {
+        $k=1;
+        while ($k<=3) {
+            echo '今日は休校日';
+            if ($k<3) {
+                echo '\(^o^)/';
+            }
+            $k++;
+        }
+        echo '<br>';
+    }
+?>
+<?php require '../footer.php'; ?>
