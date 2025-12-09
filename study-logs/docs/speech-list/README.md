@@ -11,6 +11,6 @@
 テーマ「就職に必要なこと」
 就職に必要なことはマーケティングであると定義し、フェルミ推定でIT未経験の市場人数を概算して相対分析しました。
 
-### [【アイデア倉庫(仮)(php-post-questions(Idea Repository).pdf)】](./php-post-questions(Idea Repository).pdf)
+### [【アイデア倉庫(仮)(php-post-questions(IdeaRepository).pdf)】](./php-post-questions(IdeaRepository).pdf)
 PHPのチーム開発演習で作成した成果物の発表資料です。
 要求されていた機能と追加した機能、各メンバーの苦労した個所などが記載されています。
