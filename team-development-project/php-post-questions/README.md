@@ -10,7 +10,7 @@
 ### [【アプリの外観(php-post-questions.png)】](./php-post-questions.png)
 9日間の開発で262コミット
 
-### [「質問一覧画面(questions.php)」](pases/questions.php)]
+### [「質問一覧画面(questions.php)」](./pages/questions.php)]
 私が担当したページのコードです。
 
 <br>
