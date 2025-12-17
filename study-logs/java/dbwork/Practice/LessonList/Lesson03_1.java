@@ -1,3 +1,4 @@
+package LessonList;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,7 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Lesson03_3 {
+public class Lesson03_1 {
+	
 	public static void main(String[] args) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -21,44 +23,29 @@ public class Lesson03_3 {
 		String url = "jdbc:mysql://localhost:3306/book";
 		String username = "root";
 		String password = "pass";
-		int select = 0;
+		String select = "";
 		String selectSql = ""; 
 		
 		try (InputStreamReader isr = new InputStreamReader(System.in);
 			BufferedReader br = new BufferedReader(isr);) {
 			
-			while (select != 9) {
-				System.out.print("1)author 2)category 3)books 9)終了：");
-				select = Integer.parseInt(br.readLine());
-				
-				if (1 <= select && select <= 3) {
-					break;
-				}
+			System.out.print("1)author 2)category 3)books 9)終了：");
+			select = br.readLine();
+			
+			if (select.equals("1")) {
+				selectSql = "author";
+			} else if (select.equals("2")) {
+				selectSql = "category";
+			} else if (select.equals("3")) {
+				selectSql = "books";
+			} else {
+				System.out.println("処理を終了します");
+				return;
 			}
 			
-			switch (select) {
-				case 1:
-					selectSql = "author";
-					break;
-				case 2:
-					selectSql = "category";
-					break;
-				case 3:
-					selectSql = "books";
-					break;
-				default:
-					System.out.println("処理を終了します");
-					return;
-			}
-			
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			System.err.println("入力文字エラー");
-			return;
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("入力時エラー");
-			return;
 		}
 		
 		String beseSql = "SELECT * FROM ";
@@ -68,23 +55,31 @@ public class Lesson03_3 {
 			PreparedStatement pstmt = conn.prepareStatement(finalSql);
 			ResultSet rs = pstmt.executeQuery()) {
 			
-			java.sql.ResultSetMetaData metaData = rs.getMetaData();
-			int count = metaData.getColumnCount();
-			
-			StringBuilder header = new StringBuilder();
-			for (int i = 1; i <= count; i++) {
-				header.append(metaData.getColumnName(i)).append("\t");
-			}
-			System.out.println("---" + selectSql.toUpperCase() + " データ ---");
-			System.out.println(header.toString().trim());
-			
-			while (rs.next()) {
-				StringBuilder row = new StringBuilder();
-				for (int i = 1; i <= count; i++) {
-					row.append(rs.getString(i)).append("\t");
+			if (selectSql.equals("author")) {
+				while (rs.next()) {
+					System.out.println(
+					rs.getString("author_id") + "\t"
+					+ rs.getString("name") + "\t"
+					+ rs.getString("name_kana"));
 				}
-				System.out.println(row.toString().trim());
-			}
+				
+			} else if (selectSql.equals("category")) {
+				while (rs.next()) {
+					System.out.println(
+					rs.getString("category_id") + "\t"
+					+ rs.getString("category_name"));
+				}
+			} else if (selectSql.equals("books")) {
+				while (rs.next()) {
+					System.out.println(
+					rs.getString("isbn") + "\t"
+					+ rs.getString("title") + "\t"
+					+ rs.getString("price") + "\t"
+					+ rs.getString("publish") + "\t"
+					+ rs.getString("publish_date") + "\t"
+					+ rs.getString("category_id"));
+				}
+			} 
 			
 			
 		} catch (SQLException e) {
@@ -93,5 +88,5 @@ public class Lesson03_3 {
 		}
 		
 	}
-	
+
 }

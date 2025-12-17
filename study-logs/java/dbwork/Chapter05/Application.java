@@ -1,18 +1,14 @@
-import java.util.Scanner;
-
 public class Application {
 
 	public static void main(String[] args) {
+
+		AuthorDTOList authorDatas = AuthorDAO.getAllAuthors();
 		
-		
-		Scanner scan = new Scanner(System.in);
-		System.out.print("author_idを入力してください：");
-		String inputAuthord = scan.nextLine();
-		AuthorDTO authorData = AuthorDAO.getAuthorByld(inputAuthord);
-		
-		System.out.print(authorData.getAuthorld() + "\t");
-		System.out.print(authorData.getName() + "\t");
-		System.out.println(authorData.getName_kana());
+		for (AuthorDTO authorData : authorDatas) {
+			System.out.print(authorData.getAuthorld() + "\t");
+			System.out.print(authorData.getName() + "\t");
+			System.out.println(authorData.getName_kana());
+		}
 		
 	}
 

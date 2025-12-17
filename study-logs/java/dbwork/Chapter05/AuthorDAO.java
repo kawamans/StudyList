@@ -16,7 +16,6 @@ public class AuthorDAO {
 			
 				pstmt.setString(1, inputAuthorld);
 				ResultSet rs = pstmt.executeQuery();
-				boolean found = false;
 				
 				while (rs.next()) {
 					authorData = new AuthorDTO(
@@ -24,11 +23,6 @@ public class AuthorDAO {
 							rs.getString("name"),
 							rs.getString("name_kana")
 					);
-					found = true;
-				}
-				
-				if (!found) {
-					System.out.println("データがありません。");
 				}
 				
 			} catch (SQLException e) {
@@ -37,6 +31,33 @@ public class AuthorDAO {
 			}
 		
 		return authorData;
+	}
+	
+	public static AuthorDTOList getAllAuthors() {
+		AuthorDTOList authors = new AuthorDTOList();
+		String sql = "SELECT * FROM author";
+		
+		try (Connection conn = DatebaseConnectonProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+				ResultSet rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					AuthorDTO author = new AuthorDTO(
+							rs.getString("author_id"),
+							rs.getString("name"),
+							rs.getString("name_kana")
+					);
+					authors.add(author);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.err.println("SQLに関するエラーです。");
+			}
+		
+		return authors;
+		
 	}
 	
 }
