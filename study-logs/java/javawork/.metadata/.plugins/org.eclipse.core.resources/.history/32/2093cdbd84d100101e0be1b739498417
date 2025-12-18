@@ -1,0 +1,14 @@
+package sec1ex;
+
+public class ExpressTicket extends Ticket {
+	protected int exp_add;
+	
+	public ExpressTicket(String from, String to, int fare) {
+		super(from, to, fare);
+	}
+	
+	@Override
+	public int getFare() {
+		return super.getFare();
+	}
+}

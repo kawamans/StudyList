@@ -1,0 +1,11 @@
+package sec2ex;
+
+public class Ex01 {
+	public static void main(String[] args) {
+		Salable[] sab = {
+				new Item("パソコン",10),
+				new Item("プリンター",10),
+				new Item("マウス",10)
+				};
+	}
+}

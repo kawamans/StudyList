@@ -1,0 +1,36 @@
+package sec3ex;
+
+public class Ex03 {
+	public static void main(String[] args) {
+		methodA();
+		System.out.println("mainの処理完了");
+	}
+	
+	private static void methodA() {
+		try {
+			methodB();
+			System.out.println("methodAの処理完了");
+		} catch (ArithmeticException e) {
+			System.out.println("methodAで例外をキャッチしました");
+		}
+	}
+	
+	private static void methodB() {
+		try {
+			methodC();
+			System.out.println("methodBの処理完了");
+		} catch (ArithmeticException e) {
+			System.out.println("methodBで例外をキャッチしました");
+		}
+	}
+	
+	private static void methodC() {
+		try {
+			System.out.println(24 / 0);
+			System.out.println("methodCの処理完了");
+		} catch (ArithmeticException e) {
+			System.out.println("methodCで例外をキャッチしました");
+		}
+	}
+	
+}

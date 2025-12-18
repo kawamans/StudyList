@@ -1,0 +1,23 @@
+package sec.DAO1;
+
+import java.util.Scanner;
+
+public class Application {
+
+	public static void main(String[] args) {
+		
+		try (Scanner scan = new Scanner(System.in);) {
+		
+		System.out.print("削除するauthor_idを入力してください：");
+		int authorId = scan.nextInt();
+		
+		AuthorDAO.deleteAuthor(authorId);
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+	}
+
+}

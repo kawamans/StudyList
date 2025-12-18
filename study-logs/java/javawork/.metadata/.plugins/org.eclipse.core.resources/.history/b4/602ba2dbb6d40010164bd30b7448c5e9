@@ -1,0 +1,10 @@
+package sec2;
+
+public class EqualsTest {
+
+	public static void main(String[] args) {
+		String str = "abc";
+		System.out.println(str.charAt(1));
+	}
+
+}

@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class Application {
+
+	public static void main(String[] args) {
+		
+		
+		Scanner scan = new Scanner(System.in);
+		System.out.print("author_idを入力してください：");
+		String inputAuthord = scan.nextLine();
+		AuthorDTO authorData = AuthorDAO.getAuthorByld(inputAuthord);
+		
+		if (authorData.equals(null)) {
+		} else {
+			System.out.print(authorData.getAuthorld() + "\t");
+			System.out.print(authorData.getName() + "\t");
+			System.out.println(authorData.getName_kana());
+		}
+	}
+
+}

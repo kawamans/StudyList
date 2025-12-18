@@ -1,0 +1,12 @@
+package sec2ex;
+
+public class Ex07 {
+
+	public static void main(String[] args) {
+		String str = "Java is a programming language.";
+		int count = 0;
+		
+		System.out.println("スペースは、"+count+"文字");
+	}
+
+}

@@ -1,0 +1,14 @@
+package sec2ex;
+
+public class Ex07 {
+
+	public static void main(String[] args) {
+		String str = "Java is a programming language.";
+		int count = 0;
+		int all = str.length();
+		int SpDelete = str.replaceAll("\\s", "");
+		
+		System.out.println("スペースは、"+count+"文字");
+	}
+
+}

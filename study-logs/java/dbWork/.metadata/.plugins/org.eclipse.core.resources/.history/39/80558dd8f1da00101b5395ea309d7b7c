@@ -1,0 +1,26 @@
+package sec.DAO1;
+
+import java.awt.image.DataBufferDouble;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+public class Application {
+
+	public static void main(String[] args) {
+		
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		System.out.print("削除するauthor_idを入力してください：");
+		
+		try {
+			int authorId = Integer.parseInt(br.readLine());
+			AuthorDAO.deleteAuthor(authorId);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+
+}

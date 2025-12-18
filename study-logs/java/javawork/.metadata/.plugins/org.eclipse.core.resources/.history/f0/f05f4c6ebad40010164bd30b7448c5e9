@@ -1,0 +1,8 @@
+package sec2ex;
+
+public class Ex02 {
+	int a = 20;
+	int b = 23;
+	
+	sysout
+}

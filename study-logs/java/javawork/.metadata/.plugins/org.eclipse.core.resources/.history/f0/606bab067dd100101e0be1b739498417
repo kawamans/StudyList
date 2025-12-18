@@ -1,0 +1,6 @@
+package sec1;
+
+public class ToyCar extends Product {
+	private color color;
+	
+}

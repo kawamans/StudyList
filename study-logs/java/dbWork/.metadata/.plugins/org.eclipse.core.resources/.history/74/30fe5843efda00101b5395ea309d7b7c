@@ -1,0 +1,17 @@
+package sec.DAO1;
+
+import java.util.Scanner;
+
+public class Application {
+
+	public static void main(String[] args) {
+
+		Scanner scan = new Scanner(System.in);
+		int authorId = scan.nextInt();
+		
+		AuthorDAO.deleteAuthor(authorId);
+		
+		
+	}
+
+}
