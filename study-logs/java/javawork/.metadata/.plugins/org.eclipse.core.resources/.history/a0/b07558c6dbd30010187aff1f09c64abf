@@ -1,6 +1,0 @@
-package sec2ex;
-
-public interface ICalculate {
-	public double calculate();
-	public void setFields(double num1, double num2);
-}

@@ -1,9 +1,0 @@
-INDEX VERSION 1.134+C:\dbwork\.metadata\.plugins\org.eclipse.jdt.core
-2446798781.index
-3038341641.index
-729677738.index
-1551552316.index
-742876864.index
-1865797976.index
-3256769183.index
-337394786.index

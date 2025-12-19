@@ -1,7 +1,0 @@
-package sec2ex;
-
-public interface Salable {
-	Salable other;
-	public int getPrice();
-	public String getName();
-}
