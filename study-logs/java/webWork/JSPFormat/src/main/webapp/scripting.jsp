@@ -13,6 +13,5 @@
 			out.println(fruits[i] + "<br>");
 		}
 	%>
-
 </body>
 </html>
