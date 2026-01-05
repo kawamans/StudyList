@@ -1,6 +1,8 @@
 package jp.co.seminar.servlet;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,21 +18,52 @@ import jp.co.seminar.util.DictionaryList;
 public class SearchServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //リクエストで受信した文字をUTF-8文字コードで受信する
+    protected void doGet(
+    		HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        //データ受信
-        String keyword = request.getParameter("keyword");
-        //DAOのインスタンスを生成し、メソッドを呼び出す
-        DictionaryList dList = DictionaryDAO.getList(keyword);
-        //取得したDBデータをリクエスト属性に格納
-        request.setAttribute("list", dList);
+        
+        String notword = null;
+        DictionaryList dList = new DictionaryList();
+        String engword = request.getParameter("engword");
+        String jpword = request.getParameter("jpword");
         String nextPage= "/search_result.jsp";
-        //取得データで遷移先を変更(0件でエラーとする)
-        if (dList.size() == 0) {
-            request.setAttribute("english", keyword);
-            nextPage = "/search_error.jsp";
+        
+        if (engword != null && !engword.isEmpty()) {
+        	Pattern engPattern = Pattern.compile("^[a-zA-Z]+$");
+        	Matcher engMatcher = engPattern.matcher(engword);
+        	
+        	if (engMatcher.matches()) {
+        		 dList = DictionaryDAO.getList(engword);
+        	} else {
+        		notword = engword;
+        	}
+        	
+        	if (dList.size() == 0) {
+                request.setAttribute("english", notword);
+                nextPage = "/search_error.jsp";
+            }
+        	
+        } else if (jpword != null && !jpword.isEmpty()) {
+        	
+        	Pattern jpPattern = Pattern.compile("^[\\p{IsHiragana}\\p{IsKatakana}\\p{IsHan}]+$");
+        	Matcher jpMatcher = jpPattern.matcher(jpword);
+    	
+        	if (jpMatcher.matches()) {
+        		dList = DictionaryDAO.getList(jpword);
+        	} else {
+        		notword = jpword;
+        	}
+        	
+        	if (dList.size() == 0) {
+                request.setAttribute("japanese", notword);
+                nextPage = "/search_error.jsp";
+            }
+        } else {
+        	nextPage = "/search_error.jsp";
         }
+        
+        request.setAttribute("list", dList);
+        
         RequestDispatcher rd = request.getRequestDispatcher(nextPage);
         rd.forward(request, response);
     }
