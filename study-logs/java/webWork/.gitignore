@@ -1,1 +1,13 @@
-/.metadata/
+# ビルド生成物
+*.class
+bin/
+build/
+
+# Eclipse設定ファイル
+.metadata/
+.settings/
+.project
+.classpath
+
+# サーバー設定
+Servers/
