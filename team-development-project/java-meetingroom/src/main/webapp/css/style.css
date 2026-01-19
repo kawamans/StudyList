@@ -1,0 +1,218 @@
+
+* {
+    text-align: center;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 20px;
+}
+
+.title1 {
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+.title2 {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid #ddd;
+    margin: 20px auto;
+    width: 80%;
+}
+
+.contents1 {
+    margin-top: 30px;
+}
+
+.contents1 .label {
+    display: inline-block;
+    width: 90px;
+    text-align: right;
+}
+
+.room-item, .input-user {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.room-name, .user-name{
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+    font-size: 16px;
+}
+
+.user-data {
+    display: inline-block;
+    min-width: 200px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.room-item input, .input-user input{
+    padding: 8px 20px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+ }
+
+.input-room{
+	text-align: center;
+	margin: 20px 0;
+}
+
+.input-room input{
+	padding: 10px 15px;
+	font-size: 16px;
+	width: 250px;
+	border: 1px solid #999;
+}
+
+.button1 {
+    margin-top: 20px;
+}
+
+.button1 input{
+    padding: 10px 30px;
+    font-size: 16px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+}
+
+.button2 {
+    margin-top: 30px;
+}
+
+.button2 form {
+    margin: 10px;
+}
+
+.button2 input{
+    padding: 10px 30px;
+    font-size: 16px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.button3 {
+    margin-top: 30px;
+}
+
+.button3 form {
+    display: inline-block;
+    margin: 10px;
+}
+
+.button3 input{
+    padding: 10px 30px;
+    font-size: 16px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.datechange, .user-search {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.datechange input,
+.datechange form,
+.user-search span,
+.user-search input {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.datechange input,
+.user-search input {
+    padding: 8px 20px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+ }
+
+.user-search input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #999;
+}
+
+.calendar, .room-admin, .room-reserve {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.calendar table, .room-admin table,
+.room-reserve {
+    border-collapse: collapse;
+}
+
+.calendar th, .room-admin th,
+.calendar td, .room-admin td,
+.room-reserve th, .room-reserve td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.room-admin th, .room-reserve th {
+    background-color: #f0f0f0;
+    text-align: left;
+    width: 120px;
+}
+
+/*メニュー左右*/
+.menu-container{
+	display: flex;
+	justify-content: center;
+	gap: 50px;
+	margin: 30px, 0px;
+}
+
+.menu-left, menu-right{
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.menu-felt, menu-right{
+	margin: 0px;
+}
+
+.menu-left input,
+.menu-right input{
+	width: 200px;
+	padding: 10px, 20px;
+	font-size: 16px;
+	background-color: #0066cc;
+	color: white;
+	border: none;
+	
+}
+
+
+/* 旧スタイル */
+title1 {
+    font-size: 30px;
+}
+
+title2 {
+    font-size: 18px;
+}
+
+content {
+    text-align: center;
+}
