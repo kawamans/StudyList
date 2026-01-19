@@ -1,13 +1,15 @@
-# ビルド生成物
-*.class
-bin/
-build/
-
-# Eclipse設定ファイル
-.metadata/
+# === Eclipse and Environment-specific files ===
 .settings/
 .project
 .classpath
-
-# サーバー設定
+.metadata/
 Servers/
+
+# === Compiled Class files ===
+bin/
+build/
+*.class
+
+# === OS specific files ===
+.DS_Store
+Thumbs.db
