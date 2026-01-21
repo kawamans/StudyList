@@ -13,6 +13,9 @@
 <body>
 	<%-- 会議室予約システムビーン 取得 --%>
 	<c:set var="meetingRoom" value="${ sessionScope.meetingRoom }" />
+	
+	<%-- ログイン中のユーザー名表示 --%>
+	<%@ include file="/jsp/includeFile/includeUserName.jsp" %>
 
 	<%-- タイトル１ --%>
 	<div class="title1">
@@ -30,18 +33,28 @@
 	</div>
 
 	<%-- コンテンツ --%>
-	<div class="contents1">
+	<div class="room-reserve">
 	<table>
-	<tr>予約ID：</tr>
-	<tr><c:out value="${reservation.id}" /></tr>
-	<tr>予約日：</tr>
-	<tr><c:out value="${reservation.date}" /></tr>
-	<tr>会議室：</tr>
-	<tr><c:out value="${room.name}" /></tr>
-	<tr>予約時刻：</tr>
-	<tr><c:out value="${reservation.start}～${reservation.end}" /></tr>
-	<tr>予約者：</tr>
-	<tr><c:out value="${meetingRoom.user.name}" /></tr>
+	<tr>
+		<th>予約ID：</th>
+		<td><c:out value="${reserve.id}" /></td>
+	</tr>
+	<tr>
+		<th>予約日：</th>
+		<td><c:out value="${reserve.date}" /></td>
+	</tr>
+	<tr>
+		<th>会議室：</th>
+		<td><c:out value="${room.name}" /></td>
+	</tr>
+	<tr>
+		<th>予約時刻：</th>
+		<td><c:out value="${reserve.start}～${reserve.end}" /></td>
+	</tr>
+	<tr>
+		<th>予約者：</th>
+		<td><c:out value="${meetingRoom.user.name}" /></td>
+	</tr>
 	</table>
 	</div>
  		
@@ -52,7 +65,7 @@
 	
 	<%-- 完了ボタン --%>
 		<div class="button1">
-			<form action="<%= request.getContextPath() %>/jsp/userSituation/menu.jsp" method="post">
+			<form action="<%= request.getContextPath() %>/jsp/menu.jsp" method="post">
 				<input type="submit" value="完了">
 			</form>
 		</div>

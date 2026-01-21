@@ -29,7 +29,7 @@ CREATE TABLE reservation (
 	start TIME NOT NULL,
 	end TIME NOT NULL,
 	userid VARCHAR(7) NOT NULL,
-	FOREIGN KEY(roomid) REFERENCES room(id),
+	FOREIGN KEY(roomid) REFERENCES room(id) ON DELETE CASCADE,
 	FOREIGN KEY(userid) REFERENCES user(id),
 	UNIQUE(roomid, date, start)
 );

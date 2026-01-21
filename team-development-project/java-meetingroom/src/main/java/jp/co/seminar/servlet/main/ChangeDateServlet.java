@@ -3,8 +3,6 @@ package jp.co.seminar.servlet.main;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-import javax.servlet.RequestDispatcher;
-
 /**
  * 利用日の変更する。
  * リクエストで受け取った利用日を会議室システムに設定し
@@ -30,9 +28,13 @@ public class ChangeDateServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//ログイン画面へ遷移
-		RequestDispatcher rd = request.getRequestDispatcher("/jsp/login.jsp");
-		rd.forward(request, response);
+		//未ログイン時、ログイン画面へリダイレクト
+    	HttpSession session = request.getSession(false);
+
+    	if (session == null || session.getAttribute("loginUser") == null) {
+        response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+        return;
+    	}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

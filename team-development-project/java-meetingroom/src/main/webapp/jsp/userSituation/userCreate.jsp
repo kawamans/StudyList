@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,6 +9,9 @@
 	<link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.css">
 	</head>
 <body>
+	
+	<%@ include file="/jsp/includeFile/includeUserName.jsp" %>
+	
 	<div class="title1">
 		<h1>ユーザーメニュー</h1>
 	</div>
@@ -20,31 +24,33 @@
 		<h2>ユーザー新規登録</h2>
 	</div>
 	
-	<div class="contents1">
-		<form action="<%= request.getContextPath() %>/CreateUserServlet" method="POST">
-			<table>
-				<tr>
-					<th>氏名:</th>
-					<td><input type="text" name="name" placeholder="山田 太郎" required></td>
-				</tr>
-				<tr>
-					<th>出生年:</th>
-					<td><input type="text" name="birthyear" min="1900" max="2026" maxlength="4" pattern="[0-9]*" placeholder="2000" required></td>
-				</tr>
-				<tr>
-					<th>住所:</th>
-					<td><input type="text" name="address" required></td>
-				</tr>
-				<tr>
-				<tr>
-					<th>PW:</th>
-					<td><input type="text" name="password" minlength="6" maxlength="10" pattern="[0-9a-zA-Z]*" placeholder="半角英数字6～10文字" required></td>
-				</tr>
-				<tr>
-					<th>管理者権限:</th>
-					<td><input type="checkbox" name="adminflg" value="1"></td>
-				</tr>
-			</table>
+	<div class="room-admin">
+		<form action="<%= request.getContextPath() %>/CreateUser" method="POST">
+			<div class="input-user">
+				<span class="user-name">氏名：</span>
+				<input type="text" name="name" placeholder="田中太郎" value="${user != null ? user.name : ''}" required>
+			</div>
+
+			<div class="input-user">
+				<span class="user-name">出生年：</span>
+				<input type="text" name="birthYear" maxlength="4" pattern="[0-9]*" placeholder="2000" value="${user.birthYear != null ? user.birthYear : ''}" required>
+			</div>
+
+			<div class="input-user">
+				<span class="user-name">住所：</span>
+				<input type="text" name="address" value="${user != null ? user.address : ''}" required>
+			</div>
+
+			<div class="input-user">
+				<span class="user-name">PW：</span>
+				<input type="text" name="password" minlength="6" maxlength="10" pattern="[0-9a-zA-Z]*" placeholder="半角英数字6～10文字" value="${user != null ? user.password : ''}" required>
+			</div>
+
+			<div class="input-user">
+				<span class="user-name">管理者権限：</span>
+				<input type="checkbox" name="adminflg" value="1" ${user.adminflg == '1' ? 'checked' : ''}>
+			</div>
+			
 			<div class="button1">
 				<input type="submit" value="決定">
 			</div>

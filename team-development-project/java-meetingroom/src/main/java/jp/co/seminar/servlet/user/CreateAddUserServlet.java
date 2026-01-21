@@ -10,47 +10,58 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.co.seminar.bean.AppException.AlreadyRegisteredUserException;
+import jp.co.seminar.bean.AppException.InsertUserFailedException;
 import jp.co.seminar.bean.ExtraMR;
 import jp.co.seminar.bean.UserBean;
-import jp.co.seminar.dao.UserDao;
 
 /**
- *ユーザー情報を登録処理する 
+ * ユーザー情報を登録処理する 
  * @author 川満 達也
  */
-@WebServlet("/CreateAddUserServlet")
+@WebServlet("/CreateAddUser")
 public class CreateAddUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(
 			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String password = request.getParameter("password");
-		String name = request.getParameter("name");
-		String birthYear = request.getParameter("birthyear");
-		String address = request.getParameter("address");
-		String adminflg = "0";
-		if (request.getParameter("adminflg") != null) {
-			adminflg = request.getParameter("adminflg");
+		
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || (session.getAttribute("user") == null && session.getAttribute("loginUser") == null)) {
+			response.sendRedirect(request.getContextPath()+"jsp/login.jsp");
+			return;
 		}
-		String nextpage = "jsp/userSituation/";
+		
+		
+		String next = "userError.jsp";
 		
 		ExtraMR ex = new ExtraMR();
-		UserBean userBean = ex.inputUser(password, name, birthYear, address,  adminflg);
+		UserBean user = (UserBean)session.getAttribute("user");
 		
-		if(UserDao.checkPass(userBean)) {
-			nextpage += "userConfirm.jsp";
-		} else {
-			nextpage += "userError.jsp";
+		try {
+			ex.createUser(user);
+			user = ex.getUser();
+			next = "userCompletion.jsp";
+			
+		} catch(AlreadyRegisteredUserException e) {
 			request.setAttribute("error", "このパスワードは使用されています。");
+			System.out.println(e);
+		} catch(InsertUserFailedException e) {
+			request.setAttribute("error", "登録に失敗しました。");
+			System.out.println(e);
+		} catch(Exception e) {
+			request.setAttribute("error", "処理に失敗しました。");
+			System.out.println(e);
 		}
 		
-		HttpSession session = request.getSession();
-		session.setAttribute("user", userBean);
+		
+		session.setAttribute("user", user);
 		session.setAttribute("page", "create");
 		
-		System.out.println(userBean.toString());
+		System.out.println(user.toString());
 		
-		RequestDispatcher rd = request.getRequestDispatcher(nextpage);
+		RequestDispatcher rd = request.getRequestDispatcher("jsp/userSituation/" + next);
 		rd.forward(request, response);
 	}
 

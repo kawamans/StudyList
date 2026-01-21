@@ -59,7 +59,7 @@ public class UserDao {
 	 * @return 五桁の連番
 	 */
 	public static int createId() {
-		String selectSql = "SELECT id FROM user WHERE id = (SELECT MAX(id) FROM user)";
+		String selectSql = "SELECT id FROM user ORDER BY MOD(id, 100000) DESC LIMIT 1";
 		int id = 0;
 		
 		try(Connection conn = DatabaseConnection.getConnection();
@@ -269,30 +269,27 @@ public class UserDao {
 		String updateSql = "UPDATE user SET password = ?, name = ?, address = ?, adminflg = ? WHERE id = ?";
 		boolean found = false;
 		
-		// 新規PW時に実行
-		if(checkPass(userBean)) {
-			try(Connection conn = DatabaseConnection.getConnection();
-					PreparedStatement pstmt = conn.prepareStatement(updateSql)) {
-				pstmt.setString(1, userBean.getPassword());
-				pstmt.setString(2, userBean.getName());
-				pstmt.setString(3, userBean.getAddress());
-				pstmt.setString(4, userBean.getAdminflg());
-				pstmt.setString(5, userBean.getId());
-				
-				int num = pstmt.executeUpdate();
-				
-				if (num > 0) {
-					found = true;
-				}
-				
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				System.out.println("ドライバーが見つかりません");
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println();
-				System.out.println("SQLに関するエラー");
+		try(Connection conn = DatabaseConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(updateSql)) {
+			pstmt.setString(1, userBean.getPassword());
+			pstmt.setString(2, userBean.getName());
+			pstmt.setString(3, userBean.getAddress());
+			pstmt.setString(4, userBean.getAdminflg());
+			pstmt.setString(5, userBean.getId());
+			
+			int num = pstmt.executeUpdate();
+			
+			if (num > 0) {
+				found = true;
 			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("ドライバーが見つかりません");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println();
+			System.out.println("SQLに関するエラー");
 		}
 		
 		return found;

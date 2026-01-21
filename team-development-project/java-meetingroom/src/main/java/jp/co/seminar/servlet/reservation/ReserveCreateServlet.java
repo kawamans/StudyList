@@ -49,7 +49,7 @@ public class ReserveCreateServlet extends HttpServlet {
 			RoomBean room = meetingRoom.getRoom(roomId);
 
 			//会議室予約情報をセット
-			session.setAttribute("reservation", reservation);
+			session.setAttribute("reserve", reservation);
 			session.setAttribute("room", room);
 			
 			//予約確認jspへリダイレクト

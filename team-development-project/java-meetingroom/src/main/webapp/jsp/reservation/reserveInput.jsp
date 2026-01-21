@@ -18,6 +18,9 @@
 	<%-- 会議室予約システムビーン 取得 --%>
 	<c:set var="meetingRoom" value="${ sessionScope.meetingRoom }" />
 	
+	<%-- ログイン中のユーザー名表示 --%>
+	<%@ include file="/jsp/includeFile/includeUserName.jsp" %>
+	
 	<%-- タイトル１ --%>
 	<div class="title1">
 		<h1>会議室予約</h1>
@@ -81,16 +84,18 @@
 							<c:set var="cell" value="${reservations[ri][pi]}" />
 							
 							<td><c:choose>
-									<c:when
-										test="${cell == null }">
-										<form action="<%=request.getContextPath()%>/ReserveCreate"
-											method="post" style="display: inline;">
-											<input type="hidden" name="roomId" value="${r.id}"> <input
-												type="hidden" name="time" value="${t}"> <input
-												type="submit" value="〇">
+									<c:when	test="${cell == null }">
+										<form action="<%=request.getContextPath()%>/ReserveCreate" method="post" >
+											<input type="hidden" name="roomId" value="${r.id}"> 
+											<input type="hidden" name="time" value="${t}">
+												<div class="reservation-available">
+												 <input type="submit" value="〇">
+												 </div>
 										</form>
 									</c:when>
-									<c:otherwise>×</c:otherwise>
+									<c:otherwise>
+									<div class="reservation-unavailable">×</div>
+									</c:otherwise>
 								</c:choose></td>
 						</c:forEach>
 
@@ -107,7 +112,7 @@
 
 	<%-- 戻るボタン --%>
 	<div class="button1">
-		<form action="<%=request.getContextPath()%>/jsp/userSituation/menu.jsp"
+		<form action="<%=request.getContextPath()%>/jsp/menu.jsp"
 			method="post">
 			<input type="submit" value="戻る">
 		</form>

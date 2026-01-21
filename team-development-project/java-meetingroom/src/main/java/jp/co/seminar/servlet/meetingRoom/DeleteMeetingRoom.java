@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.bean.AppException;
 import jp.co.seminar.bean.ExtraMR;
-import jp.co.seminar.bean.MeetingRoom;
 import jp.co.seminar.bean.RoomBean;
 
 @WebServlet("/DeleteMeetingRoom")
@@ -30,40 +29,43 @@ public class DeleteMeetingRoom extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession(false);
-		if(session == null) {
-			response.sendRedirect(request.getContextPath()+"/jsp/login.jsp");
+		if (session == null) {
+			response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
 			return;
 		}
 		//extramrとmeetingRoomの初期
-		ExtraMR extramr = (ExtraMR)session.getAttribute("ExtraMR");
-		MeetingRoom meetingRoom = (MeetingRoom)session.getAttribute("meetingRoom");
+		ExtraMR extramr = (ExtraMR) session.getAttribute("ExtraMR");
+		RoomBean rb = (RoomBean) session.getAttribute("room");
+		//遷移先分岐の変数追加
+		//session取得
+		session.setAttribute("room", rb);
 		
-		RoomBean room = (RoomBean)session.getAttribute("room");	
+		String delete = "delete";
+		session.setAttribute("page", delete);
+		//画面遷移
+
 		try {
-			
-			
+
 			//extramrのメソッドを実行
-			extramr.deleteRoom(room);
-			
-			session.setAttribute("ExtraMR", extramr);
-			session.setAttribute("meetingRoom", meetingRoom);
-			
-			
-			//成功した場合MeetingRoomConfirmに遷移
-			response.sendRedirect(request.getContextPath() +
-					"/jsp/meetingRoom/MeetingRoomCompletion.jsp");
+			extramr.deleteRoom(rb);
+		
+			response.sendRedirect(request.getContextPath()+"/jsp/meetingRoom/meetingRoomCompletion.jsp");
+
 			
 			//対象の会議室が存在しない場合
-		}catch(AppException.NonExistentRoomException e){
+		} catch (AppException.NonExistentRoomException e) {
+			e.printStackTrace();
+			request.setAttribute("errorReason", e.getMessage());
 			request.getRequestDispatcher("/jsp/meetingRoom/meetingRoomError.jsp")
-			.forward(request, response);
-			
+					.forward(request, response);
+
 			//会議室削除に失敗した場合
-		}catch(AppException.DeleteRoomFailedException e){
+		} catch (AppException.DeleteRoomFailedException e) {
+			e.printStackTrace();
+			request.setAttribute("errorReason", e.getMessage());
 			request.getRequestDispatcher("/jsp/meetingRoom/meetingRoomError.jsp")
-			.forward(request, response);
+					.forward(request, response);
 		}
-			
 
 	}
 

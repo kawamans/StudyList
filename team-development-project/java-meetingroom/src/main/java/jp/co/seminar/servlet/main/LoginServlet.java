@@ -28,9 +28,13 @@ public class LoginServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//ログイン画面へ遷移
-		RequestDispatcher rd = request.getRequestDispatcher("/jsp/login.jsp");
-		rd.forward(request, response);
+		//未ログイン時、ログイン画面へリダイレクト
+    	HttpSession session = request.getSession(false);
+
+    	if (session == null || session.getAttribute("loginUser") == null) {
+        response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+        return;
+    	}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -52,29 +56,19 @@ public class LoginServlet extends HttpServlet {
         //ログイン情報を取得
         String userId = request.getParameter("userId");
         String userPw = request.getParameter("userPw");
-        String userName = null;
-        String adminFlg = null;
-				
-		//判定
+
+        //判定
 		if ( meetingRoom.login(userId, userPw)) {
 			
-			userId = meetingRoom.getUser().getId();
-			userName = meetingRoom.getUser().getName();
-			adminFlg = meetingRoom.getUser().getAdminflg();
 			LoginUserBean loginUser = meetingRoom.getUser();
-			
-				//ログイン者情報をセッションに格納
-				session.setAttribute("userId", userId);
-				session.setAttribute("userName", userName);
-				session.setAttribute("adminFlg", adminFlg); 
-								
+						
 				//ログイン者情報をセッションに格納
 				session.setAttribute("loginUser", loginUser);
 								
 				// セッション属性にセット
 		        session.setAttribute("meetingRoom", meetingRoom);
 		        session.setAttribute("ExtraMR", ex );
-
+		        
 				//ログイン成功
 				RequestDispatcher rd = request.getRequestDispatcher("/jsp/menu.jsp");
 				rd.forward(request, response);

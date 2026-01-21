@@ -37,34 +37,52 @@ public class ReserveServlet extends HttpServlet {
 		
 		//予約情報管理Bean 取得
 		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
-		ReservationBean reservation = (ReservationBean) session.getAttribute("reservation");
+		ReservationBean reservation = (ReservationBean) session.getAttribute("reserve");
 		
 		//予約情報 登録
 		try {
 			//予約情報登録
 			meetingRoom.reserve(reservation);
-			
 			//登録成功時
-				response.sendRedirect(request.getContextPath() +
-						"/jsp/reservation/reserved.jsp");
+			response.sendRedirect(request.getContextPath() +
+									"/jsp/reservation/reserved.jsp");
 				return;
-			
-			//登録失敗時
+				
+		//予約登録に失敗した場合の例外
 		} catch (AppException.ReservationFailedException e) {
 			e.printStackTrace();
 			request.setAttribute("errorReason", e.getMessage());
 			request.getRequestDispatcher("/jsp/reservation/reserveError.jsp")
-					.forward(request, response);
+			.forward(request, response);
 			return;
+			
+		//予約時間が過ぎている場合の例外
+		}catch (AppException.TimePassedException e) {
+			e.printStackTrace();
+			request.setAttribute("errorReason", e.getMessage());
+			request.getRequestDispatcher("/jsp/reservation/reserveError.jsp")
+			.forward(request, response);
+			return;
+
+		//既に予約されている場合の例外
 		}catch (AppException.AlreadyReservedException e) {
 			e.printStackTrace();
 			request.setAttribute("errorReason", e.getMessage());
 			request.getRequestDispatcher("/jsp/reservation/reserveError.jsp")
-					.forward(request, response);
+			.forward(request, response);
 			return;
-		}catch (AppException.TimePassedException e) {
+		
+		//ヌルポ対策
+		}catch (NullPointerException e) {
 			e.printStackTrace();
-			request.setAttribute("errorReason",  e.getMessage());
+			request.setAttribute("errorReason", "戻るボタンを使用してください。");
+			request.getRequestDispatcher("/jsp/reservation/reserveError.jsp")
+			.forward(request, response);
+			return;
+		
+		//その他例外
+		}catch (Exception e) {
+			request.setAttribute("errorReason", "会議室予約処理に失敗しました。");
 			request.getRequestDispatcher("/jsp/reservation/reserveError.jsp")
 					.forward(request, response);
 			return;

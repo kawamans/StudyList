@@ -11,14 +11,11 @@
 </head>
 <body>
 
-	<%-- セッション 取得(セッション切れの場合ログイン画面へ遷移させる) --%>
-	<%
-	HttpSession ses = request.getSession(false);
-	if (ses == null) {
-    response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
-    return;
-	}
-	%>
+	<%-- 会議室予約システムビーン 取得 --%>
+	<c:set var="meetingRoom" value="${ sessionScope.meetingRoom }" />
+	
+	<%-- ログイン中のユーザー名表示 --%>
+	<%@ include file="/jsp/includeFile/includeUserName.jsp" %>
 	
 	<div class="title1">
 		<h1>会議室予約キャンセル</h1>
@@ -84,13 +81,19 @@
 									<c:when
 										test="${cell != null && cell.userId == meetingRoom.user.id}">
 										<form action="<%=request.getContextPath()%>/CancelCreate"
-											method="post" style="display: inline;">
+											method="post" >
 											<input type="hidden" name="roomId" value="${r.id}"> 
 											<input type="hidden" name="time" value="${t}"> 
+											<div class="reservation-available">
 											<input type="submit" value="〇">
+											</div>
 										</form>
 									</c:when>
-									<c:otherwise>×</c:otherwise>
+									
+									<c:otherwise>
+									<div class="reservation-unavailable">×</div>
+									</c:otherwise>
+									
 								</c:choose>
 							</td>
 						</c:forEach>

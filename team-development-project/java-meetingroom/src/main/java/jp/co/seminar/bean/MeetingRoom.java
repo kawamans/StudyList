@@ -117,6 +117,10 @@ public class MeetingRoom implements Serializable {
 		throw new Exception("利用時間外です。"); 
 	}
 	
+	public void setRooms(RoomBean[] rooms) {
+		this.rooms = rooms;
+	}
+	
 	/**===============================================================**/
 	/** 利用時間帯の配列を取得
 	 * @param なし
@@ -200,25 +204,28 @@ public class MeetingRoom implements Serializable {
 	
 	public ReservationBean[][] getReservations(){
 		
-//		ReservationBean[][]を生成
+		//ReservationBean[][]を生成
 		ReservationBean[][] reservations = new ReservationBean[rooms.length][PERIOD.length];
 		
-//		→配列に入れる予約リストの取得
-// 　　（初期値はthis.dateの予約情報）
+		//→配列に入れる予約リストの取得
+		//（初期値はthis.dateの予約情報）
 		List<ReservationBean> list = ReservationDao.findByDate(this.date);
-		
-//		Listの中身をReservationBean[][]の二次元配列に入れる
-//		startPeriod(), roomIndex()の例外はtry-catch
-		try {
-		for(ReservationBean rb : list) {
-			int periodIndex = startPeriod(rb.getStart());
-			int roomIndex = roomIndex(rb.getRoomId());
-			
-			reservations[roomIndex][periodIndex] = rb;
+
+		//Listの中身をReservationBean[][]の二次元配列に入れる
+		//startPeriod(), roomIndex()の例外はtry-catch
+		//listがnullの場合は処理をスキップ
+		if (list != null) {
+			try {
+			for(ReservationBean rb : list) {
+				int periodIndex = startPeriod(rb.getStart());
+				int roomIndex = roomIndex(rb.getRoomId());
+
+				reservations[roomIndex][periodIndex] = rb;
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("インデックス取得中のエラー :"+ e.getMessage());
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			System.out.println("インデックス取得中のエラー :"+ e.getMessage());
 		}
 		
 		return reservations;
@@ -279,7 +286,7 @@ public class MeetingRoom implements Serializable {
 		//予約日時取得→reservation.getDate(), reservation.getStart()
 		String reservationDate = reservation.getDate(); //String
 		String start = reservation.getStart(); //String
-
+		
 		// 時刻を2桁形式に変換してからLocalDateTimeへ変換する
 		LocalTime startTime;
 		try {
@@ -357,7 +364,8 @@ public class MeetingRoom implements Serializable {
 			throw new AppException.CancelFailedException("予約情報の取得に失敗しました。");
 		}
 
-		//予約が存在しない場合
+		//予約が存在しない場合→getReservationのなかのfindByDateで
+		//予約がなければnullを返す設計になってるのでぬるぽ対策（ユニットテストより）
 		if(existingReservation == null) {
 			throw new AppException.CancelFailedException("予約が見つかりません。");
 		}

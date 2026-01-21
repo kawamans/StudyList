@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="jp.co.seminar.bean.MeetingRoom" %>
 <!DOCTYPE html>
+<%@ page isErrorPage="true" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -9,30 +11,53 @@
 <link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.css">
 </head>
 <body>
-	
-	<div class = title1>
-	<h1>会議室予約キャンセル</h1>
+	<%-- 会議室予約システムビーン 取得 --%>
+	<c:set var="meetingRoom" value="${ sessionScope.meetingRoom }" />
+	<c:set var="reservation" value="${sessionScope.reservation}" />
+	<c:set var="room" value="${sessionScope.room}" />
+	<div class="title1">
+		<h1>会議室予約キャンセル</h1>
 	</div>
-	
-	<hr>
-	
-	
-	<div class = title2>
-	<h2>キャンセルエラー</h2>
+
+	<div class="hr">
+		<hr>
 	</div>
-	
-	<div class = contents1>
-	<p>既にキャンセルされています</p>
-	<p>予約日 ${reservation.date}</p>
-	<p>会議室 ${room.name}</p>
-	<p>予約時刻 ${reservation.start}～${reservation.end}</p>
-	<p>予約者 ${meetingRoom.user.name }</p>
+
+	<div class="title2">
+		<h2>キャンセルエラー</h2>
 	</div>
-	
-	<hr>
-	<div class = button1>
+
+		<%-- エラー内容 --%>
+		<p><c:out value="${errorReason}" /></p>
+	<div class="room-reserve">
+	<table>
+	<tr>
+			<th>予約日：</th>
+			<td><c:out value="${reserve.date}"/></td>
+		</tr>
+		<tr>
+			<th>会議室：</th>
+			<td><c:out value="${room.name}"/></td>
+		</tr>
+		<tr>
+			<th>予約時刻：</th>
+			<td><c:out value="${reserve.start}"/>～<c:out value="${reserve.end}"/></td>
+		</tr>
+		<tr>
+			<th>予約者：</th>
+			<td><c:out value="${meetingRoom.user.name}"/></td>
+		</tr>
+		</table>
+	</div>
+
+	<div class="hr">
+		<hr>
+	</div>
+
+	<%-- 確認ボタン --%>
+	<div class="button1">
 		<form action="<%=request.getContextPath()%>/jsp/menu.jsp" method="post">
-			<input type = submit value ="確認" >
+			<input type="submit" value="確認">
 		</form>
 	</div>
 

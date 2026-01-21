@@ -14,8 +14,10 @@
 <body>
 	<%-- 会議室予約システムビーン 取得 --%>
 	<c:set var="meetingRoom" value="${ sessionScope.meetingRoom }" />
-	<c:set var="reservation" value="${ meetingRoom.reservations }" />
 
+	<%-- ログイン中のユーザー名表示 --%>
+	<%@ include file="/jsp/includeFile/includeUserName.jsp" %>
+	
 	<%-- h2 --%>
 	<div class="title1">
 		<h1>会議室予約</h1>
@@ -31,30 +33,32 @@
 		<h2>予約エラー</h2>
 	</div>
 	
+	<%-- エラーメッセージ --%>
+	<p><c:out value="${errorReason}" /></p>
+	
 	<%-- エラー内容 --%>
-	<div class="contents1">
-	<table>
-	<tr>
-		<th><c:out value="${errorReason}" /></th>
-	</tr>
-	<tr>
-		<td>予約日：</td>
-		<td><c:out value="${reservations.date}" /></td>
-	</tr>
-	<tr>
-		<td>会議室：</td>
-		<td><c:out value="${room.name}" /></td>
-	</tr>
-	<tr>
-		<td>予約時刻：</td>
-		<td><c:out value="${reservations.start}～${reservations.end}" /></td>
-	</tr>
-	<tr>
-		<td>予約者：</td>
-		<td><c:out value="${meetingRoom.user.name}" /></td>
-	</tr>
-	</table>
-	</div>
+	<c:if test="${not empty reserve}">
+		<div class="room-reserve">
+			<table>
+			<tr>
+				<th>予約日：</th>
+				<td><c:out value="${reserve.date}" /></td>
+			</tr>
+			<tr>
+				<th>会議室：</th>
+				<td><c:out value="${room.name}" /></td>
+			</tr>
+			<tr>
+				<th>予約時刻：</th>
+				<td><c:out value="${reserve.start}～${reserve.end}" /></td>
+			</tr>
+			<tr>
+				<th>予約者：</th>
+				<td><c:out value="${meetingRoom.user.name}" /></td>
+			</tr>
+			</table>
+		</div>
+	</c:if>
 	
 	<%-- hr --%>
 	<div class="hr">

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.co.seminar.bean.AppException;
 import jp.co.seminar.bean.MeetingRoom;
 import jp.co.seminar.bean.ReservationBean;
 import jp.co.seminar.bean.RoomBean;
@@ -22,36 +23,66 @@ public class CancelCreateServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String roomId = request.getParameter("roomId");
-		String time = request.getParameter("time");
+		String start = request.getParameter("time");
 		
-		HttpSession session = request.getSession();
-
-		// meetingRoom確認
-		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
-		if (meetingRoom == null) {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
 			response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
-		    return;
+			return;
 		}
 
+		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
+		
+		
 		
 		try {
-				//meetingRoomBeanの予約生成メソッドを使用して部屋番号、開始時刻取得
-				ReservationBean reservation = meetingRoom.createReservation(roomId,time);
+				//meetingRoomBeanの予約生成メソッドを使用して予約、会議室beanを取得
+				ReservationBean reservation = meetingRoom.createReservation(roomId,start);
 				RoomBean room = meetingRoom.getRoom(roomId);
 				//取り消す予約と会議室をセット
 		
-				session.setAttribute("reservation", reservation);
+				session.setAttribute("reserve", reservation);
 				session.setAttribute("room", room);
 		
-		request.getRequestDispatcher("/jsp/cancel/cancelConfirm.jsp")
-				.forward(request, response);
-	}catch (Exception e) {
+				response.sendRedirect(request.getContextPath() +
+						"/jsp/cancel/cancelConfirm.jsp");
+	}catch (AppException.ReservationFailedException e){
 		e.printStackTrace();
 		request.setAttribute("errorReason",  e.getMessage());
-		request.getRequestDispatcher("/jsp/reservation/cancelError.jsp")
+		request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
 				.forward(request, response);
 		return;
-	}
+	}catch (AppException.UnauthorizedCancelException e) {
+
+		
+		request.setAttribute("errorReason", e.getMessage());
+		request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
+				.forward(request, response);
+		return;
+
+	} catch (AppException.CancelFailedException e) {
+
+		
+		request.setAttribute("errorReason", e.getMessage());
+		request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
+				.forward(request, response);
+		return;
+		
+	} catch (NullPointerException e) {
+		
+		request.setAttribute("errorReason","バックキーを使わず、戻るボタンを使用してください" );
+		request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
+				.forward(request, response);
+		return;
+		
+	}catch (Exception e) {
+
+		request.setAttribute("errorReason", "キャンセル処理に失敗しました。");
+		request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
+				.forward(request, response);
+		return;
+
+	} 
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

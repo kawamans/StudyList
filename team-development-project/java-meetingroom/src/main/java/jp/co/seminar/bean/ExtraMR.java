@@ -52,6 +52,20 @@ public class ExtraMR implements Serializable {
 	
 	
 	/**
+	 * ユーザー登録情報の生成
+	 * @param password
+	 * @param name
+	 * @param birthYear
+	 * @param address
+	 * @param adminflg
+	 * @return
+	 */
+	public UserBean instanceUser(String id, String password, String name, String address, String adminflg, String select) {
+		return new UserBean(id, password, name, address, adminflg, select);
+	}
+	
+	
+	/**
 	 * 利用者新規ID生成
 	 * 出生年の西暦下二桁と最新のIDの連番下五桁を結合する
 	 * @param userBean
@@ -166,11 +180,6 @@ public class ExtraMR implements Serializable {
 			throw new AppException.NonExistentUserException("この利用者は存在しません。");
 		}
 		
-		// 変更後PWが新規のものか確認
-		if(!UserDao.checkPass(userBean)) {
-			throw new AppException.AlreadyRegisteredUserException("このパスワードは使用されています。");
-		}
-		
 		// 変更処理を実行
 		if(!UserDao.updateUser(userBean)) {
 			throw new AppException.UpdateUserFailedException("利用者情報の変更に失敗しました。");
@@ -249,7 +258,7 @@ public class ExtraMR implements Serializable {
 		}
 	}
 	
-	
+
 	/**
 	 * 会議室削除
 	 * @param roomBean

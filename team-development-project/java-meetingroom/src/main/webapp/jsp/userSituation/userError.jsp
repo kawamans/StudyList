@@ -1,5 +1,26 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="pageName" value="${sessionScope.page}" />
+<c:choose> 
+	<c:when test="${pageName == 'create'}">
+		<c:set var="message" value="登録エラー" />
+		<c:set var="nextPage" value="userCreate.jsp" />
+	</c:when>
+	<c:when test="${pageName == 'update'}">
+		<c:set var="message" value="変更エラー" />
+		<c:set var="nextPage" value="userUpdate.jsp" />
+	</c:when>
+	<c:when test="${pageName == 'delete'}">
+		<c:set var="message" value="削除エラー" />
+		<c:set var="nextPage" value="userDelete.jsp" />
+	</c:when>
+	<c:otherwise>
+		<c:set var="message" value="不明な操作です" />
+		<c:set var="nextPage" value="menu.jsp" />
+	</c:otherwise>
+</c:choose>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +29,9 @@
 	<link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.css">
 	</head>
 <body>
+
+	<%@ include file="/jsp/includeFile/includeUserName.jsp" %>
+	
 	<div class="title1">
 		<h1>ユーザーメニュー</h1>
 	</div>
@@ -17,37 +41,46 @@
 	</div>
 	
 	<div class="title2">
-		<h2>登録エラー</h2>
-		<h2>変更エラー</h2>
-		<h2>削除エラー</h2>
+		<h2><c:out value="${message}" /></h2>
 	</div>
-
+	
+	<c:if test="${error != null}">
+		<div class="error">
+			${error}
+		</div>
+	</c:if>
+	
 	<div class="contents1">
 		<div class="input-user">
 			<span class="user-name">氏名:</span>
-			<%-- データベースから取得 --%>
-			<span class="user-data">田中太郎</span>
+			<span class="user-data"><c:out value="${user.name}" /></span>
 		</div>
 		<div class="input-user">
-			<span class="user-name">出生年:</span>
-			<%-- データベースから取得 --%>
-			<span class="user-data">1997</span>
-		</div>
-		<div class="input-user">
-			<span class="user-name">住所:</span>
-			<%-- データベースから取得 --%>
-			<span class="user-data">愛知県名古屋市</span>
+			<c:choose>
+				<c:when test="${page == 'create'}">
+					<span class="user-name">出生年：</span>
+					<span class="user-data"><c:out value="${user.birthYear}" /></span>
+				</c:when>
+				<c:otherwise>
+					<span class="user-name">利用者ID：</span>
+					<span class="user-data"><c:out value="${user.id}" /></span>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div class="input-user">
 			<span class="user-name">PW:</span>
-			<%-- データベースから取得 --%>
-			<span class="user-data">********</span>
+			<span class="user-data"><c:out value="${user.password}" /></span>
 		</div>
 		<div class="input-user">
-			<span class="user-name">管理者権限:</span>
-			<%-- データベースから取得 --%>
-			<span class="user-data">あり</span>
+			<span class="user-name">住所:</span>
+			<span class="user-data"><c:out value="${user.address}" /></span>
 		</div>
+		<c:if test="${loginUser.adminflg == '1'}">
+			<div class="input-user">
+				<span class="user-name">管理者権限:</span>
+				<span class="user-data">${user.adminflg == "1" ? "あり" : "なし"}</span>
+			</div>
+		</c:if>
 	</div>
 
 	<div class="hr">
@@ -55,8 +88,8 @@
 	</div>
 
 	<div class="button1">
-		<form action="<%= request.getContextPath() %>/jsp/menu.jsp" method="get">
-			<input type="submit" value="確認">
+		<form action="<%= request.getContextPath() %>/jsp/userSituation/${nextPage}">
+			<input type="submit" value="戻る">
 		</form>
 	</div>
 

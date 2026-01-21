@@ -1,20 +1,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-    
 <c:set var="pageName" value="${sessionScope.page}" />
 <c:choose> 
 	<c:when test="${pageName == 'create'}">
 		<c:set var="message" value="登録確認" />
+		<c:set var="nextPage" value="userCreate.jsp" />
+		<c:set var="nextServlet" value="CreateAddUser" />
 	</c:when>
 	<c:when test="${pageName == 'update'}">
 		<c:set var="message" value="変更確認" />
+		<c:set var="nextPage" value="userUpdate.jsp" />
+		<c:set var="nextServlet" value="UpdateAddUser" />
 	</c:when>
 	<c:when test="${pageName == 'delete'}">
 		<c:set var="message" value="削除確認" />
+		<c:set var="nextPage" value="userDelete.jsp" />
+		<c:set var="nextServlet" value="DeleteAddUser" />
 	</c:when>
 	<c:otherwise>
 		<c:set var="message" value="不明な操作です" />
+		<c:set var="nextPage" value="menu.jsp" />
 	</c:otherwise>
 </c:choose>
 
@@ -26,6 +32,8 @@
 <link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.css">
 </head>
 <body>
+
+	<%@ include file="/jsp/includeFile/includeUserName.jsp" %>
 		
 	<div class="title1">
 		<h1>ユーザーメニュー</h1>
@@ -39,57 +47,47 @@
 		<h2><c:out value="${message}" /></h2>
 	</div>
 	
-	<c:if test="${error != null}">
-		<div class="error">
-			${error}
-		</div>
-	</c:if>
-	
 	<div class="contents1">
-		<form action="<%= request.getContextPath() %>/CreateAddUserServlet" method="POST">
-			<table>
-				<tr>
-					<th>氏名：</th>
-					<td><c:out value="${user.name}" /></td>
-				</tr>
-				<tr>
-					<c:choose>
-						<c:when test="${page == 'create'}">
-							<th>出生年：</th>
-							<td><c:out value="${user.birthYear} /></td>
-						</c:when>
-						<c:otherwise>
-							<th>利用者ID：</th>
-							<td><c:out value="${user.id} /></td>
-						</c:otherwise>
-					</c:choose>
-				</tr>
-				<tr>
-					<th>PW：</th>
-					<td><c:out value="${user.password} /></td>
-				</tr>
-				<tr>
-					<th>住所：</th>
-					<td><c:out value="${user.address} /></td>
-				</tr>
-				<tr>
-					<c:if test="${loginuser.adminflg == '1'}">
-						<th>管理者権限：</th>
-						<td${user.adminflg == "1" ? "あり" : "なし"}</td>
-					</c:if>
-				</tr>
-			</table>
-			<div class="hr">
-				<hr>
+		<div class="input-user">
+			<span class="user-name">氏名：</span>
+			<span class="user-data"><c:out value="${user.name}" /></span>
+		</div>
+		<div class="input-user">
+			<c:choose>
+				<c:when test="${page == 'create'}">
+					<span class="user-name">出生年：</span>
+					<span class="user-data"><c:out value="${user.birthYear}" /></span>
+				</c:when>
+				<c:otherwise>
+					<span class="user-name">利用者ID：</span>
+					<span class="user-data"><c:out value="${user.id}" /></span>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div class="input-user">
+			<span class="user-name">PW：</span>
+			<span class="user-data"><c:out value="${user.password}" /></span>
+		</div>
+		<div class="input-user">
+			<span class="user-name">住所：</span>
+			<span class="user-data"><c:out value="${user.address}" /></span>
+		</div>
+		<c:if test="${loginUser.adminflg == '1'}">
+			<div class="input-user">
+				<span class="user-name">管理者権限：</span>
+				<span class="user-data">${user.adminflg == "1" ? "あり" : "なし"}</span>
 			</div>
+		</c:if>
+		
+		<form action="<%= request.getContextPath() %>/${nextServlet}" method="POST">
 			<div class="button1">
-				<input type="submit" value="確認">
+				<input type="submit" value="確定">
 			</div>
 		</form>
 	</div>
 	
 	<div class="button1">
-		<form action="<%= request.getContextPath() %>/jsp/menu.jsp">
+		<form action="<%= request.getContextPath() %>/jsp/userSituation/${nextPage}">
 			<input type="submit" value="戻る">
 		</form>
 	</div>

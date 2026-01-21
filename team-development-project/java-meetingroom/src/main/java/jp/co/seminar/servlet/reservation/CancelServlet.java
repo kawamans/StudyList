@@ -38,32 +38,22 @@ public class CancelServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 
-		try {
+		
 			//セッションがない場合ログインしなおし
-			if (session == null) {
-				throw new Exception("セッションが無効です。再ログインしてください。");
-			}
+		if(session == null) {
+			response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+			return;
+		}
 
-			//meetingroomを取得する
 			MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
-
-			if (meetingRoom == null) {
-				throw new Exception("meetingRoom が取得できません。再ログインしてください。");
-			}
-
-			//reservationを取得
-			ReservationBean reservation = (ReservationBean) session.getAttribute("reservation");
-			if (reservation == null) {
-				throw new Exception("取消対象の予約情報が取得できません。");
-			}
-
-			//meetingroom側で予約キャンセル失敗で例外が来る想定
+			ReservationBean reservation = (ReservationBean) session.getAttribute("reserve");
+		
+		try {
 			meetingRoom.cancel(reservation);
 			//成功で完了画面へ遷移
-			RequestDispatcher rd = request.getRequestDispatcher("/jsp/cancel/canceled.jsp");
-			rd.forward(request, response);
-			return;
-
+			response.sendRedirect(request.getContextPath() +
+					"/jsp/cancel/canceled.jsp");
+			//以下失敗
 		} catch (AppException.TimePassedException e) {
 
 			
@@ -88,7 +78,14 @@ public class CancelServlet extends HttpServlet {
 					.forward(request, response);
 			return;
 
-		} catch (Exception e) {
+		}catch (NullPointerException e) {
+			
+			request.setAttribute("errorReason","バックキーを使わず、戻るボタンを使用してください" );
+			request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
+					.forward(request, response);
+			return;
+			
+		}catch (Exception e) {
 
 			
 			request.setAttribute("errorReason", "キャンセル処理に失敗しました。");
