@@ -45,7 +45,7 @@
 		<h2>会議室確認</h2>
 	</div>
 
-	<div class="contents1">
+	<div class="contents2">
 
 
 		<c:choose>
@@ -118,7 +118,7 @@
 		<c:choose>
 			<c:when test="${page == 'create'}">
 			
-			<form action="<%=request.getContextPath()%>/CreateMeetingRoom"
+			<form action="<%=request.getContextPath()%>/CreateAddMeetingRoom"
 			method="post">
 			<input type="submit" value="決定">
 			</form>
@@ -126,7 +126,7 @@
 			</c:when>
 
 			<c:otherwise>
-			<form action="<%=request.getContextPath()%>/DeleteMeetingRoom"
+			<form action="<%=request.getContextPath()%>/DeleteAddMeetingRoom"
 			method="post">
 			<input type="submit" value="決定">
 			</form>

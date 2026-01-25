@@ -9,17 +9,15 @@
 <link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.css">
 </head>
 <body>
-
-	<%@ include file="/jsp/includeFile/includeUserName.jsp" %>
 	
-	<c:if test="${flg == 'search'}">
-		<c:if test="${user.adminflg == '1'}">
-			<c:set var="admin" value="あり" />
-		</c:if>
-		<c:if test="${user.adminflg == '0'}">
-			<c:set var="admin" value="なし" />
-		</c:if>
+	<c:set var="ex" value="${sessionScope.ExtraMR}" />
+	<c:set var="users" value="${loginUser}" />
+	
+	<c:if test="${not empty searchUser}">
+		<c:set var="users" value="${searchUser}" />
 	</c:if>
+	
+	<%@ include file="/jsp/includeFile/includeUserName.jsp" %>
 	
 	<div class="title1">
 		<h1>ユーザーメニュー</h1>
@@ -33,70 +31,61 @@
 		<h2>ユーザー情報削除</h2>
 	</div>
 	
-	<div class="user-search">
-		<form action="<%= request.getContextPath() %>/DeleteUser" method="POST">
-			<span>検索ID:</span>
-			<input type="text" name="userid" pattern="[0-9]*">
-			<input type="hidden" name="flg" value="search">
-			<input type="submit" value="検索">
-		</form>
-	</div>
-	
-	<div class="hr">
-		<hr>
-	</div>
-	
-	<c:if test="${flg == 'search'}">
-		<div class="contents1">
-			
-			検索した利用者を表示します。
+	<c:if test="${error != null}">
+		<div class="error">
+			${error}
 		</div>
 	</c:if>
+	
+	${userId}
 
 	<div class="contents1">
 		<form action="<%= request.getContextPath() %>/DeleteUser" method="POST">
+			
 			<div class="input-user">
-				<span class="user-name">氏名:</span>
-				<span class="user-data">${flg == 'search' ? user.name : ''}</span>
+				<span class="user-name">ID：</span>
+				<span class="user-data"><c:out value="${users != null ? users.id : ''}" /></span>
+				<input type="hidden" name="id" value="${users != null ? users.id : ''}">
 			</div>
 			
 			<div class="input-user">
-				<span class="user-name">ID:</span>
-				<span class="user-data">${flg == 'search' ? user.id : ''}</span>
+				<span class="user-name">氏名：</span>
+				<span class="user-data"><c:out value="${users != null ? users.name : ''}" /></span>
+				<input type="hidden" name="name" value="${users != null ? users.name : ''}">
 			</div>
 			
 			<div class="input-user">
-				<span class="user-name">住所:</span>
-				<span class="user-data">${flg == 'search' ? user.address : ''}</span>
+				<span class="user-name">住所：</span>
+				<span class="user-data"><c:out value="${users != null ? users.address : ''}" /></span>
+				<input type="hidden" name="address" value="${users != null ? users.address : ''}">
 			</div>
 			
 			<div class="input-user">
-				<span class="user-name">PW:</span>
-				<span class="user-data">${flg == 'search' ? user.password : ''}</span>
+				<span class="user-name">PW：</span>
+				<span class="user-data"><c:out value="${users != null ? users.password : ''}" /></span>
+				<input type="hidden" name="password" value="${users != null ? users.password : ''}">
 			</div>
 			
 			<div class="input-user">
-				<span class="user-name">管理者権限:</span>
-				<span class="user-data">${flg == 'search' ? admin : ''}</span>
+				<span class="user-name">管理者権限：</span>
+				<span class="user-data">${users != null ? (users.adminflg == '1' ? 'あり' : 'なし') : ''}</span>
+				<input type="hidden" name="password" value="${users != null ? users.adminflg : ''}">
 			</div>
 			
-			<input type="hidden" name="flg" value="input">
+			<div class="hr">
+				<hr>
+			</div>
+			
+			<div class="button3">
+				<button type="button" onclick="location.href='<%= request.getContextPath() %>/jsp/userSituation/userSearch.jsp'">戻る</button>
+				
+				<c:if test="${empty error && error == null}">
+					<input type="submit" value="決定">
+				</c:if>
+			</div>
+		
 		</form>
+		
 	</div>
-
-	<div class="hr">
-		<hr>
-	</div>
-
-	<div class="button3">
-		<form action="<%= request.getContextPath() %>">
-			<input type="submit" value="決定">
-		</form>
-
-		<form action="<%= request.getContextPath() %>/jsp/menu.jsp">
-			<input type="submit" value="戻る">
-		</form>
-	</div>
-
 </body>
 </html>

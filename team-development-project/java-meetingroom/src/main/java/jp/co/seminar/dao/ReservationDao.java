@@ -90,6 +90,39 @@ public class ReservationDao {
 		return check;
 	}
 	
+	
+	/**
+	 * 利用者の会議室の予約の有無を判定する ※追加
+	 * @param userId
+	 * @return 予約がある場合 true
+	 */
+	public static boolean checkReserveUser(String userId) {
+		String selectSql = "SELECT * FROM reservation WHERE userid = ?";
+		boolean isCheck = false;
+		
+		try(Connection conn = DatabaseConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(selectSql)) {
+			pstmt.setString(1, userId);
+			
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					isCheck = true;
+				}
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("ドライバーが見つかりません");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println();
+			System.out.println("SQLに関するエラー");
+		}
+		
+		return isCheck;
+	}
+	
+	
 	/**
 	 * 予約登録
 	 * @param reservation 予約情報Bean
@@ -168,4 +201,30 @@ public class ReservationDao {
 		return found;
 	}
 	
+	
+	public static boolean userReserveDelete(String userId) {
+		String deleteSql = "DELETE FROM reservation WHERE userid = ?";
+		boolean found = false;
+		
+		try(Connection conn = DatabaseConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(deleteSql)) {
+			pstmt.setString(1, userId);
+			
+			int num = pstmt.executeUpdate();
+			
+			if (num > 0) {
+				found = true;
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("ドライバーが見つかりません");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println();
+			System.out.println("SQLに関するエラー");
+		}
+		
+		return found;
+	}
 }

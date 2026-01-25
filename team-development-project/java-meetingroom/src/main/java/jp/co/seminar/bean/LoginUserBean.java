@@ -67,7 +67,8 @@ public class LoginUserBean implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "id = " + id + " / password = " + password + " / "
+		return "LoginUserBean"
+				+ "id = " + id + " / password = " + password + " / "
 				+ "\nname = " + name + " / address = " + address + " / "
 				+ " adminflg = " + adminflg;
 	}

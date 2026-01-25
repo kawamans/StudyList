@@ -2,14 +2,6 @@ package jp.co.seminar.servlet.meetingRoom;
 
 import java.io.IOException;
 
-/**
- * 会議室を削除する
- * 削除成功時は、削除完了画面に遷移し、例外処理を補足した場合
- * 例外メッセージをリクエスト属性にセットして
- * 削除エラー画面に遷移する
- * @author 谷田　将平
- */
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,9 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import jp.co.seminar.bean.AppException;
 import jp.co.seminar.bean.ExtraMR;
 import jp.co.seminar.bean.RoomBean;
+
+/**
+ * 削除したい会議室を生成する。
+ * @author 谷田　将平
+ */
 
 @WebServlet("/DeleteMeetingRoom")
 public class DeleteMeetingRoom extends HttpServlet {
@@ -28,54 +24,33 @@ public class DeleteMeetingRoom extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		HttpSession session = request.getSession(false);
+		String roomId = request.getParameter("roomId");
+		String roomName = request.getParameter("roomName");
+		
+		//セッション 取得(セッション切れの場合ログイン画面へ遷移させる)
+		HttpSession session = request.getSession();
 		if (session == null) {
-			response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+			response.sendRedirect(request.getContextPath() + "jsp/login.jsp");
 			return;
 		}
-		//extramrとmeetingRoomの初期
-		ExtraMR extramr = (ExtraMR) session.getAttribute("ExtraMR");
-		RoomBean rb = (RoomBean) session.getAttribute("room");
-		//遷移先分岐の変数追加
-		//session取得
-		session.setAttribute("room", rb);
+
 		
+		ExtraMR extramr = (ExtraMR)session.getAttribute("ExtraMR");
+		
+		//メソッド使用
+		RoomBean rb = extramr.instanceRoom(roomId,roomName);
+		
+		//セッションにセット
+		session.setAttribute("room", rb);
 		String delete = "delete";
 		session.setAttribute("page", delete);
-		//画面遷移
 
-		try {
 
-			//extramrのメソッドを実行
-			extramr.deleteRoom(rb);
-		
-			response.sendRedirect(request.getContextPath()+"/jsp/meetingRoom/meetingRoomCompletion.jsp");
-
-			
+			response.sendRedirect(request.getContextPath() + "/jsp/meetingRoom/meetingRoomConfirm.jsp");
 			//対象の会議室が存在しない場合
-		} catch (AppException.NonExistentRoomException e) {
-			e.printStackTrace();
-			request.setAttribute("errorReason", e.getMessage());
-			request.getRequestDispatcher("/jsp/meetingRoom/meetingRoomError.jsp")
-					.forward(request, response);
-
-			//会議室削除に失敗した場合
-		} catch (AppException.DeleteRoomFailedException e) {
-			e.printStackTrace();
-			request.setAttribute("errorReason", e.getMessage());
-			request.getRequestDispatcher("/jsp/meetingRoom/meetingRoomError.jsp")
-					.forward(request, response);
-		}
-
+		
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// ログインしていない場合、ログイン画面にリダイレクト
-		HttpSession session = request.getSession(false);
-		if (session == null || session.getAttribute("loggedInUser") == null) {
-			response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
-			return;
-		}
+	
 	}
-}
+

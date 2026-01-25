@@ -40,9 +40,9 @@
 		<h2><c:out value="${message}" /></h2>
 	</div>
 
-	<div class="contents1">
+	<div class="contents2">
 		<div class="input-user">
-			<span class="user-name">氏名:</span>
+			<span class="user-name">氏名：</span>
 			<span class="user-data"><c:out value="${user.name}" /></span>
 		</div>
 		<div class="input-user">
@@ -58,16 +58,16 @@
 			</c:choose>
 		</div>
 		<div class="input-user">
-			<span class="user-name">PW:</span>
+			<span class="user-name">PW：</span>
 			<span class="user-data"><c:out value="${user.password}" /></span>
 		</div>
 		<div class="input-user">
-			<span class="user-name">住所:</span>
+			<span class="user-name">住所：</span>
 			<span class="user-data"><c:out value="${user.address}" /></span>
 		</div>
 		<c:if test="${loginUser.adminflg == '1'}">
 			<div class="input-user">
-				<span class="user-name">管理者権限:</span>
+				<span class="user-name">管理者権限：</span>
 				<span class="user-data">${user.adminflg == "1" ? "あり" : "なし"}</span>
 			</div>
 		</c:if>

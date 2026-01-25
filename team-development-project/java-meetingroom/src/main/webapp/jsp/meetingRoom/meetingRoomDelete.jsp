@@ -44,7 +44,7 @@
 						<td><c:out value="${t.id}" /></td>
 						<td><c:out value="${t.name}" /></td>
 						<td>
-							<form action="<%=request.getContextPath()%>/DeleteAddMeetingRoom"
+							<form action="<%=request.getContextPath()%>/DeleteMeetingRoom"
 								method="post" style="margin: 0;">
 								<input type="hidden" name="roomId" value="${t.id }"/>
 								<input type="hidden" name="roomName" value="${t.name }"/>
@@ -60,7 +60,7 @@
 	<div class="hr">
 		<hr />
 	</div>
-	<div class="button1">
+	<div class="button2">
 		<form action="<%=request.getContextPath()%>/jsp/menu.jsp" method="get">
 			<input type="submit" value="戻る" />
 		</form>

@@ -84,13 +84,6 @@ public class ReserveCreateServlet extends HttpServlet {
 		}
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// ログインしていない場合、ログイン画面にリダイレクト
-		HttpSession session = request.getSession(false);
-		if (session == null || session.getAttribute("loggedInUser") == null) {
-			response.sendRedirect("jsp/login.jsp");
-		}
-	}
+	
 
 }

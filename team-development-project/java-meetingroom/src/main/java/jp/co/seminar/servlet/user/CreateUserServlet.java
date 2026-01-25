@@ -26,9 +26,9 @@ public class CreateUserServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
-		
+		// sessionが無ければリダイレクト
 		if (session == null || session.getAttribute("loginUser") == null) {
-			response.sendRedirect(request.getContextPath()+"jsp/login.jsp");
+			response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
 			return;
 		}
 		
@@ -45,6 +45,7 @@ public class CreateUserServlet extends HttpServlet {
 		ExtraMR ex = new ExtraMR();
 		UserBean user = ex.inputUser(password, name, birthYear, address,  adminflg);
 		
+		// 新規登録利用者のパスワードをチェック
 		if(!UserDao.checkPass(user)) {
 			next = "userError.jsp";
 			request.setAttribute("error", "このパスワードは使用されています。");

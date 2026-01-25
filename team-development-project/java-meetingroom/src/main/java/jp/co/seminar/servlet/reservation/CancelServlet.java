@@ -2,7 +2,6 @@ package jp.co.seminar.servlet.reservation;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,12 +25,7 @@ public class CancelServlet extends HttpServlet {
 	 * @author 飯田一心
 	 */
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
-		rd.forward(request, response);
-	}
+	
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

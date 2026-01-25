@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.css">
 </head>
 	<body>
+		
+
 		<c:set var="meetingRoom" value="${ sessionScope.meetingRoom }" />
 	
 		<%
@@ -26,14 +28,21 @@
 		<div class="hr">
 			<hr>
 		</div>
-			
+		<div class="logo-top">
+			<img src="${pageContext.request.contextPath}/img/logo-top-ts.png" alt="ロゴ" width="400">
+		</div>
 		<div class="title2">
 			<h2>ログイン</h2>
 		</div>
+			<c:if test="${not empty message}">
+    			<div class="error">
+        			${message}
+    			</div>
+			</c:if>
 			
 			<div class="contents1">
 				<form action="<%= request.getContextPath() %>/Login" method="post">
-				<div class="label">利用者ID:</div> <input type="text" name="userId"><br>
+				<div class="label">利用者ID:</div> <input type="text" name="userId" value="${userId != null ? userId : ''}"><br>
 				<div class="label">パスワード:</div> <input type="password" name="userPw"><br>
 				<div class="button1">
 					<input type="submit" value="ログイン">

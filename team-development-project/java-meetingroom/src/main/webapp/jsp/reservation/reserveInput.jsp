@@ -4,7 +4,9 @@
 <%@ page import="jp.co.seminar.bean.ReservationBean" %>
 <%@ page import="jp.co.seminar.bean.RoomBean" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="java.util.Date, java.text.SimpleDateFormat" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -30,7 +32,16 @@
 	<div class="hr">
 		<hr>
 	</div>
-
+	<c:if test="${ empty meetingRoom.rooms }">
+	<div>
+	 <h2>会議室が存在しません。<br>
+	 会議室登録を行ってください。</h2>
+	</div>
+	</c:if>
+	
+	<%-- 会議室が一つもデータベースに無い場合 --%>
+	<c:if test="${ not empty meetingRoom.rooms }">
+	
 	<%-- タイトル２ --%>
 	<div class="title2">
 		<h2>利用日</h2>
@@ -49,7 +60,8 @@
 
 	<%-- タイトル２ --%>
 	<div class="title2">
-		<h2>予約可能時間帯( <c:out value="${meetingRoom.user.name}" /> ）</h2>
+	<fmt:parseDate value="${meetingRoom.date}" pattern="yyyy-MM-dd" var="d"/>
+	<h2>予約可能時間帯( <fmt:formatDate value="${d}" pattern="yyyy/MM/dd"/>) </h2>
 	</div>
 	
 	<%-- ２次元配列で予約状況の取得 --%>
@@ -104,6 +116,7 @@
 			</table>
 		</form>
 	</div>
+	</c:if>
 
 	<%-- hr --%>
 	<div class="hr">

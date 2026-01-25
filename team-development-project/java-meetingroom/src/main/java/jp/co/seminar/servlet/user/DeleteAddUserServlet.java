@@ -10,57 +10,89 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.co.seminar.bean.AppException.DeleteRoomFailedException;
+import jp.co.seminar.bean.AppException.LogicalDeleteAdminException;
+import jp.co.seminar.bean.AppException.LogicalDeleteUserFailedException;
+import jp.co.seminar.bean.AppException.NonExistentUserException;
 import jp.co.seminar.bean.ExtraMR;
+import jp.co.seminar.bean.LoginUserBean;
 import jp.co.seminar.bean.UserBean;
-import jp.co.seminar.dao.UserDao;
 
 /**
  * ユーザー情報を削除処理する
- * @author 山崎 恵士
+ * @author 川満
  */
-
 @WebServlet("/DeleteAddUser")
 public class DeleteAddUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(
-			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//未ログイン時、ログイン画面へリダイレクト
-    	HttpSession session = request.getSession(false);
-
-    	if (session == null || session.getAttribute("loginUser") == null) {
-        response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
-        return;
-    	}
-	}
-
 	protected void doPost(
 			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-			//パラメータを取得
-			String userId = request.getParameter("userId");
-			
-			String nextpage = "jsp/userSituation/";
-			
-			//UserBeanの作成
-			UserBean userBean = new UserBean();
-			userBean.setId(userId);
-
-			//オブジェクトの宣言
-			ExtraMR ex = new ExtraMR();
-					
-			//ユーザー削除
-			ex.logicalDeleteUser(userBean);
-			
-			if(UserDao.checkPass(userBean)) {
-				nextpage += "userCompletion.jsp";
-			} else {
-				nextpage += "userError.jsp";
-				request.setAttribute("error", "削除に失敗しました。");
-			}						
-					
-			RequestDispatcher rd = request.getRequestDispatcher(nextpage);
-			rd.forward(request, response);
+		
+		HttpSession session = request.getSession(false);
+		// sessionが無ければリダイレクト
+		if (session == null || session.getAttribute("loginUser") == null) {
+			response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+			return;
 		}
-
+		
+		String next = "userError.jsp";
+		
+		ExtraMR ex = (ExtraMR)session.getAttribute("ExtraMR");
+		UserBean user = (UserBean)session.getAttribute("user");
+		LoginUserBean loginUser = (LoginUserBean)session.getAttribute("loginUser");
+		
+		boolean isInputData = false;
+		
+		try {
+			isInputData = (user.getId().equals(request.getParameter("id"))
+					&& user.getName().equals(request.getParameter("name")) 
+					&& user.getAddress().equals(request.getParameter("address")) 
+					&& user.getPassword().equals(request.getParameter("password"))
+					&& user.getAdminflg().equals(request.getParameter("adminflg")));
+			
+		} catch(NullPointerException e) {
+			System.out.println(e);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+			
+		if (isInputData) {
+			try {
+				if(loginUser != null && user != null && !loginUser.getId().equals(user.getId())) {
+					
+					ex.logicalDeleteUser(user);
+					session.setAttribute("user", ex.getUser());
+					next = "userCompletion.jsp";
+					
+				} else {
+					
+					request.setAttribute("error", "利用者本人は削除できません。");
+				}
+				
+			} catch(NonExistentUserException e) {
+				request.setAttribute("error", "この利用者は存在しません。");
+				System.out.println(e);
+			} catch (LogicalDeleteAdminException e) {
+				request.setAttribute("error", "最後の管理者は削除できません。");
+				System.out.println(e);
+			} catch (LogicalDeleteUserFailedException e) {
+				request.setAttribute("error", "削除に失敗しました。");
+				System.out.println(e);
+			} catch (DeleteRoomFailedException e) {
+				request.setAttribute("error", "会議室予約の削除ができませんでした。");
+				System.out.println(e);
+			} catch (Exception e) {
+				request.setAttribute("error", "不明なエラーです。");
+				System.out.println(e);
+			}
+		} else {
+			request.setAttribute("error", "正規の処理ではありません。");
+		}
+		
+		session.setAttribute("page", "delete");
+		
+		RequestDispatcher rd = request.getRequestDispatcher("jsp/userSituation/" + next);
+		rd.forward(request, response);
+	}
 }

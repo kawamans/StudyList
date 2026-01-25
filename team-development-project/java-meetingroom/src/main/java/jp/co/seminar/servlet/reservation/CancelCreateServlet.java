@@ -85,12 +85,6 @@ public class CancelCreateServlet extends HttpServlet {
 	} 
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// ログインしていない場合、ログイン画面にリダイレクト
-		HttpSession session = request.getSession(false); 
-        if (session == null || session.getAttribute("loggedInUser") == null) {
-            response.sendRedirect(request.getContextPath() +"/jsp/login.jsp");
-		return; 
-        }
+	
 	}
-}
+

@@ -50,20 +50,15 @@
 				<span class="user-name">管理者権限：</span>
 				<input type="checkbox" name="adminflg" value="1" ${user.adminflg == '1' ? 'checked' : ''}>
 			</div>
-			
-			<div class="button1">
+
+			<div class="hr">
+				<hr>
+			</div>
+
+			<div class="button3">
+				<button type="button" onclick="location.href='<%= request.getContextPath() %>/jsp/menu.jsp'">戻る</button>
 				<input type="submit" value="決定">
 			</div>
-		</form>
-	</div>
-	
-	<div class="hr">
-		<hr>
-	</div>
-	
-	<div class="button1">
-		<form action="<%= request.getContextPath() %>/jsp/menu.jsp">
-			<input type="submit" value="戻る">
 		</form>
 	</div>
 </body>

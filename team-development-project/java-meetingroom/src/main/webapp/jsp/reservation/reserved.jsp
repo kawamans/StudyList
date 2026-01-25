@@ -36,23 +36,23 @@
 	<div class="room-reserve">
 	<table>
 	<tr>
-		<th>予約ID：</th>
+		<th>予約ID</th>
 		<td><c:out value="${reserve.id}" /></td>
 	</tr>
 	<tr>
-		<th>予約日：</th>
+		<th>予約日</th>
 		<td><c:out value="${reserve.date}" /></td>
 	</tr>
 	<tr>
-		<th>会議室：</th>
+		<th>会議室</th>
 		<td><c:out value="${room.name}" /></td>
 	</tr>
 	<tr>
-		<th>予約時刻：</th>
+		<th>予約時刻</th>
 		<td><c:out value="${reserve.start}～${reserve.end}" /></td>
 	</tr>
 	<tr>
-		<th>予約者：</th>
+		<th>予約者</th>
 		<td><c:out value="${meetingRoom.user.name}" /></td>
 	</tr>
 	</table>

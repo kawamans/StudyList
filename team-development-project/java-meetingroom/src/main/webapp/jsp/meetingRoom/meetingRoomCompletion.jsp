@@ -57,7 +57,7 @@
 	
 
 	<%-- コンテンツ --%>
-	<div class="contents1">
+	<div class="contents2">
 	<c:if test="${room != null}">
 	<div class="input-user">
 		<span class="user-name">会議室ID：</span>

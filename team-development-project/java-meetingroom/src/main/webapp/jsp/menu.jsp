@@ -34,7 +34,7 @@
 			<form
 				action="<%=request.getContextPath()%>/jsp/reservation/reserveInput.jsp"
 				method="post">
-				<input type="submit" value="会場予約">
+				<input type="submit" value="会議室予約">
 			</form>
 
 			<form
@@ -57,13 +57,12 @@
 		</div>
 		
 		</div>
-		<%	
-			//セッションからuserAdwminFlgを取得
-			LoginUserBean loginUser = (LoginUserBean)session.getAttribute("loginUser");
-			//"1"かどうかを判定
-   			if ("1".equals(loginUser.getAdminflg())) {
-			// 管理者の処理
-		%>
+			
+			<%-- セッションからuserAdwminFlgを取得 --%>
+		<c:set var="loginUser" value="${ sessionScope.loginUser }" />
+			<%-- "1"かどうかを判定 --%>
+   		<c:if test="${loginUser.adminflg == '1'}" > 
+			<%-- 管理者の処理 --%>
 		
 		<div class="menu-right">
 		<div class="button2">
@@ -87,25 +86,16 @@
 			</form>
 
 			<form
-				action="<%=request.getContextPath()%>/jsp/userSituation/userUpdate.jsp"
+				action="<%=request.getContextPath()%>/jsp/userSituation/userSearch.jsp"
 				method="post">
-				<input type="submit" value="ユーザー変更">
+				<input type="submit" value="ユーザー変更・削除">
 			</form>
 
-			<form
-				action="<%=request.getContextPath()%>/jsp/userSituation/userDelete.jsp"
-				method="post">
-				<input type="submit" value="ユーザー削除">
-			</form>
 		</div>
 		</div>
 		
 		
-		<%
-			} else {
-			// 利用者の処理
-			}
-		%>
+		</c:if>
 		</div>
 	</body>
 </html>

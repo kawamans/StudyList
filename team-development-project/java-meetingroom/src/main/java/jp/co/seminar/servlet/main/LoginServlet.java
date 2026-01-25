@@ -28,13 +28,10 @@ public class LoginServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//未ログイン時、ログイン画面へリダイレクト
-    	HttpSession session = request.getSession(false);
-
-    	if (session == null || session.getAttribute("loginUser") == null) {
-        response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
-        return;
-    	}
+		//ログイン画面へリダイレクト
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
+		res.sendRedirect(req.getContextPath() + "/jsp/login.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -47,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		//セッションタイムアウトを設定
-		session.setMaxInactiveInterval(60 * 10);
+		session.setMaxInactiveInterval(60 * 60);
 				
 		// 会議室管理システムオブジェクト生成
         MeetingRoom meetingRoom = new MeetingRoom(); 
@@ -75,8 +72,12 @@ public class LoginServlet extends HttpServlet {
 
 			} else {
 				//ログイン失敗
+				request.setAttribute("message", "エラーメッセージ：ログインに失敗しました。");
+				request.setAttribute("userId", userId);
 				RequestDispatcher rd = request.getRequestDispatcher("/jsp/login.jsp");
 				rd.forward(request, response);
+				
+
 			}
 			
 	

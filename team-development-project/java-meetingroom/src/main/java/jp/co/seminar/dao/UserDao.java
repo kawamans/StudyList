@@ -3,6 +3,8 @@ package jp.co.seminar.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.co.seminar.bean.LoginUserBean;
 import jp.co.seminar.bean.UserBean;
@@ -54,6 +56,42 @@ public class UserDao {
 	
 	
 	// 追加メソッド ====================================
+	/**
+	 * 登録利用者全件取得
+	 * @return
+	 */
+	public static List<UserBean> findUser(){
+		String sql = "SELECT * FROM user WHERE deleteflg = 0 ORDER BY MOD(id, 100000) DESC";
+		List<UserBean> userList = new ArrayList<>();
+		
+		try(Connection conn = DatabaseConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+				
+			while(rs.next()) {
+				UserBean user = new UserBean(
+						rs.getString("id"), rs.getString("password"),rs.getString("name"), 
+						rs.getString("address"), rs.getString("adminflg"), "select");
+				userList.add(user);
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("ドライバーが見つかりません");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println();
+			System.out.println("SQLに関するエラー");
+		}
+		
+		if(userList.isEmpty()) {
+			return null;
+		}
+		
+		return userList;
+	}
+	
+	
 	/**
 	 * 最新の利用者IDの下五桁を生成
 	 * @return 五桁の連番
@@ -156,7 +194,7 @@ public class UserDao {
 	 * @param userBean
 	 * @return 管理者が2人以上で true
 	 */
-	public static boolean lastAdmin(UserBean userBean) {
+	public static boolean lastAdmin() {
 		String selectSql = "SELECT COUNT(*) FROM user WHERE adminflg = 1";
 		boolean check = false;
 		
@@ -168,7 +206,7 @@ public class UserDao {
 				if(rs.next()) {
 					count = rs.getLong("COUNT(*)");
 				}
-				if(count > 1) {
+				if(count == 1) {
 					check = true;
 				}
 			}
@@ -307,7 +345,7 @@ public class UserDao {
 		boolean check = true;
 		
 		// 削除対象が管理者であれば、DB内の管理者人数を確認
-		if(userBean.getAdminflg().equals("1") && !UserDao.lastAdmin(userBean)) {
+		if(userBean.getAdminflg().equals("1") && UserDao.lastAdmin()) {
 			check = false;
 		}
 		

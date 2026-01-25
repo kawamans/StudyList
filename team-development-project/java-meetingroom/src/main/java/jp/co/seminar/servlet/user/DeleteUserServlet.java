@@ -2,6 +2,7 @@ package jp.co.seminar.servlet.user;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,49 +10,67 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.co.seminar.bean.ExtraMR;
+import jp.co.seminar.bean.LoginUserBean;
 import jp.co.seminar.bean.UserBean;
 
 /**
  * ユーザー削除情報生成する
->>>>>>> 9c39472444fa9ef4bfc7891a56dea101924173e2
- * @author 山崎 恵士
+ * @author 川満
  */
 
 @WebServlet("/DeleteUser")
 public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected void doGet(
-			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//未ログイン時、ログイン画面へリダイレクト
-    	HttpSession session = request.getSession(false);
-
-    	if (session == null || session.getAttribute("loginUser") == null) {
-        response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
-        return;
-    	}
-	}
 
 	protected void doPost(
 			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		try {
-			//パラメータを取得
-			String userId = request.getParameter("userId");
-			
-			//ユーザー情報を取得
-			UserBean userBean = new UserBean();
-			userBean.setId(userId);
-			
-			//リクエストにセット
-			request.setAttribute("delete", userBean);
-			
-			//確認画面へ
-			request.getRequestDispatcher("/jsp/userSituation/userConfirm.jsp").forward(request, response);
-			
-			}catch (Exception e) {
-				e.printStackTrace();
-				request.getRequestDispatcher("/jsp/userSituation/userError.jsp").forward(request, response);
-			}
-		}	
+		HttpSession session = request.getSession(false);
+		// sessionが無ければリダイレクト
+		if (session == null || session.getAttribute("loginUser") == null) {
+			response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+			return;
+		}
 		
+		
+		String next = "error.jsp";
+		
+		try {
+			String id = request.getParameter("id");
+			ExtraMR ex = (ExtraMR)session.getAttribute("ExtraMR");
+			LoginUserBean loginUser = (LoginUserBean)session.getAttribute("loginUser");
+			
+			if (loginUser.getId().equals(id) && id != null) {
+				
+				next = "userDelete.jsp";
+				request.setAttribute("error", "ログイン利用者本人は削除できません。");
+				request.setAttribute("userId", id);
+				
+			} else {
+			
+				String password = request.getParameter("password");
+				String name = request.getParameter("name");
+				String address = request.getParameter("address");
+				String adminflg = request.getParameter("adminflg");
+				
+				UserBean user = ex.instanceUser(id, password, name, address, adminflg, "select");
+					
+				next = "userConfirm.jsp";
+				
+				session.setAttribute("user", user);
+				session.setAttribute("page", "delete");
+			
+			}
+		} catch (NullPointerException e) {
+			request.setAttribute("error", "不正な操作です。");
+			System.out.println(e);
+		} catch (Exception e) {
+			request.setAttribute("error", "不明なエラーです。");
+			System.out.println(e);
+		}
+		
+		RequestDispatcher rd = request.getRequestDispatcher("jsp/userSituation/" + next);
+		rd.forward(request, response);
+	}
 }

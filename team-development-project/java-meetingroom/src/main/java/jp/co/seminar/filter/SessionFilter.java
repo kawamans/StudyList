@@ -34,6 +34,7 @@ public class SessionFilter extends HttpFilter implements Filter {
 			session.removeAttribute("room");
 			session.removeAttribute("user");
 			session.removeAttribute("page");
+			session.removeAttribute("searchUser");
 		}
 		
 		chain.doFilter(request, response);

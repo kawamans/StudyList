@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,12 +25,21 @@
 
 
 	<hr>
+	
+	<c:if test="${ empty meetingRoom.rooms }">
+	<div>
+	 <h2>会議室が存在しません。<br>
+	 会議室登録を行ってください。</h2>
+	</div>
+	</c:if>
+	
+	<c:if test="${ not empty meetingRoom.rooms }">
 
 	<div class="title2">
-		<h3>利用日</h3>
+		<h2>利用日</h2>
 	</div>
 	<%--日付変更フォーム --%>
-	<div class="datechange">
+	<div class="date-change1">
 		<form action="<%=request.getContextPath()%>/ChangeDate" method="post">
 			<input type="date" name="date" value="${meetingRoom.date}"> 
 			<input type="hidden" name="page" value="cancelInput.jsp"> 
@@ -38,13 +49,12 @@
 
 	<br>
 
-
+	<div class="title2">
 	<h2>
-		キャンセル可能時間帯(
-		<c:out value="${meetingRoom.user.name}" />
-		）
-
+		<fmt:parseDate value="${meetingRoom.date}" pattern="yyyy-MM-dd" var="d" />
+			キャンセル可能時間帯(<fmt:formatDate value="${d}" pattern="yyyy/MM/dd" />）
 	</h2>
+	</div>
 
 	<%-- ２次元配列で予約状況の取得 --%>
 	<c:set var="periods" value="${meetingRoom.period}" />
@@ -102,6 +112,7 @@
 			</tbody>
 		</table>
 	</div>
+</c:if>
 
 	<hr>
 

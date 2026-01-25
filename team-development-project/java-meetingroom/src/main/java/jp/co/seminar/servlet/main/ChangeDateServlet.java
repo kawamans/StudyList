@@ -26,17 +26,6 @@ import jp.co.seminar.bean.MeetingRoom;
 public class ChangeDateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		//未ログイン時、ログイン画面へリダイレクト
-    	HttpSession session = request.getSession(false);
-
-    	if (session == null || session.getAttribute("loginUser") == null) {
-        response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
-        return;
-    	}
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -55,23 +44,9 @@ public class ChangeDateServlet extends HttpServlet {
 		String page = request.getParameter("page");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-//			if(date.equals(sdf)) {
-
 		//値をセット
 		meetingRoom.setDate(date);
         session.setAttribute("meetingRoom", meetingRoom);
-//            
-//			}else {
-//				try {
-//					//フォーマット違い時変換してセット
-//					sdf.parse(date);
-//					meetingRoom.setDate(date);
-//		            session.setAttribute("meetingRoom", meetingRoom);
-//				}catch (Exception e) {
-//					e.printStackTrace();
-//					e.getMessage();
-//				}
-//			}
 			
 		// 画面遷移
 		if ("reserveInput.jsp".equals(page)) {

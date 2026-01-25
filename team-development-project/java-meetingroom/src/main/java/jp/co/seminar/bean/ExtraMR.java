@@ -1,6 +1,7 @@
 package jp.co.seminar.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jp.co.seminar.bean.AppException.AlreadyRegisteredRoomException;
 import jp.co.seminar.bean.AppException.AlreadyRegisteredUserException;
@@ -12,6 +13,7 @@ import jp.co.seminar.bean.AppException.LogicalDeleteUserFailedException;
 import jp.co.seminar.bean.AppException.NonExistentRoomException;
 import jp.co.seminar.bean.AppException.NonExistentUserException;
 import jp.co.seminar.bean.AppException.UpdateUserFailedException;
+import jp.co.seminar.dao.ReservationDao;
 import jp.co.seminar.dao.RoomDao;
 import jp.co.seminar.dao.UserDao;
 
@@ -24,9 +26,12 @@ public class ExtraMR implements Serializable {
 	// フィールド ====================================
 	private RoomBean room; // 会議室情報
 	private UserBean user; // 利用者情報
+	private List<UserBean> userList;
 	private static final long serialVersionUID = 1L;
 	
-	public ExtraMR() {}
+	public ExtraMR() {
+		this.userList = UserDao.findUser();
+	}
 	
 	public RoomBean getRooms() {
 		return room;
@@ -34,6 +39,14 @@ public class ExtraMR implements Serializable {
 	
 	public UserBean getUser() {
 		return user;
+	}
+	
+	public List<UserBean> getUserList() {
+		return userList;
+	}
+	
+	public void renewUserList() {
+		this.userList = UserDao.findUser();
 	}
 	
 	
@@ -145,6 +158,9 @@ public class ExtraMR implements Serializable {
 			throw new AppException.InsertUserFailedException("利用者の登録に失敗しました。");
 		}
 		
+		// ユーザーリストを更新
+		renewUserList();
+		
 		// 登録成功時に登録情報を格納
 		this.user = userBean;
 	}
@@ -184,6 +200,12 @@ public class ExtraMR implements Serializable {
 		if(!UserDao.updateUser(userBean)) {
 			throw new AppException.UpdateUserFailedException("利用者情報の変更に失敗しました。");
 		}
+		
+		// ユーザーリストを更新
+		renewUserList();
+		
+		// 変更成功時に登録情報を格納
+		this.user = userBean;
 	}
 	
 	
@@ -201,7 +223,7 @@ public class ExtraMR implements Serializable {
 		}
 		
 		// 対象が管理者の場合は削除可能かを確認
-		if(userBean.getAdminflg().equals("1") && !UserDao.lastAdmin(userBean)) {
+		if(userBean.getAdminflg().equals("1") && UserDao.lastAdmin()) {
 			throw new AppException.LogicalDeleteAdminException("最後の管理者は削除できません。");
 		}
 		
@@ -209,6 +231,18 @@ public class ExtraMR implements Serializable {
 		if(!UserDao.logicalDeleteUser(userBean)) {
 			throw new AppException.LogicalDeleteUserFailedException("削除に失敗しました。");
 		}
+		
+		if(ReservationDao.checkReserveUser(userBean.getId())) {
+			if(!ReservationDao.userReserveDelete(userBean.getId())) {
+				throw new AppException.DeleteRoomFailedException("会議室の削除に失敗しました。");
+			}
+		}
+		
+		// ユーザーリストを更新
+		renewUserList();
+		
+		// 削除成功時に登録情報を格納
+		this.user = userBean;
 	}
 	
 	

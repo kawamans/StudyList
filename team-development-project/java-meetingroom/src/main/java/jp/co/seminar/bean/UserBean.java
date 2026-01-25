@@ -91,7 +91,8 @@ public class UserBean implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "id = " + id + " / password = " + password + " / "
+		return "UserBean"
+				+ "id = " + id + " / password = " + password + " / "
 				+ "\nname = " + name + " / birthYear = " + birthYear + " / "
 				+ "\naddress = " + address + " / adminflg = " + adminflg;
 	}

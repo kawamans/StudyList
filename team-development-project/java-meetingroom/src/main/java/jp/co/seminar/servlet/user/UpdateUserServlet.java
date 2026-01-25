@@ -28,75 +28,92 @@ public class UpdateUserServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
-		
+		// sessionが無ければリダイレクト
 		if (session == null || session.getAttribute("loginUser") == null) {
-			response.sendRedirect(request.getContextPath()+"jsp/login.jsp");
+			response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
 			return;
 		}
 		
 		
-		String flg = request.getParameter("flg");
-		String userId = request.getParameter("userId");
-		ExtraMR ex = new ExtraMR();
-		String next = "";
-		
-		if (flg.equals("search") && userId != null) {
+		String next = "error.jsp";
 			
-			next = "userUpdate.jsp";
-			
-			UserBean user = ex.searchUser(userId);
-			
-			if (user != null) {
-				request.setAttribute("flg", flg);
-				session.setAttribute("user", user);
-				
-			} else {
-				request.setAttribute("result", "利用者が見つかりません。");
-			}
-			
-			
-		} else {
-		
+		try{
 			String id = request.getParameter("id");
 			String password = request.getParameter("password");
 			String name = request.getParameter("name");
 			String address = request.getParameter("address");
-			String adminflg = "0";
-			if (request.getParameter("adminflg") != null) {
-				adminflg = request.getParameter("adminflg");
-			}
-			next = "userConfirm.jsp";
+			String adminflg = (request.getParameter("adminflg") != null) ? "1" : "0";
 			
 			LoginUserBean loginUser = (LoginUserBean)session.getAttribute("loginUser");
-			UserBean user = ex.instanceUser(id, password, name, address, adminflg, "select");
+			UserBean searchUser = (UserBean)session.getAttribute("searchUser");
+			UserBean originUser = null;
 			
-			if(loginUser.getId().equals(user.getId())) {
-	
-				if(loginUser.getPassword().equals(user.getPassword())) {
-					
-				} else {
-					
-					if(!UserDao.checkPass(user)) {
-						next = "userError.jsp";
-						request.setAttribute("error", "このパスワードは使用されています。");
-					}
-				}
-				
+			if(searchUser != null) {
+				originUser = searchUser;
 			} else {
-				
-				if(!UserDao.checkPass(user)) {
-					next = "userError.jsp";
-					request.setAttribute("error", "このパスワードは使用されています。");
-				}
+				originUser = new UserBean(
+						loginUser.getId(), loginUser.getPassword(),loginUser.getName(),
+						loginUser.getAddress(), loginUser.getAdminflg(), "select");
 			}
 			
-			session.setAttribute("user", user);
-			session.setAttribute("page", "update");
+			ExtraMR ex = (ExtraMR)session.getAttribute("ExtraMR");
 			
-			System.out.println(user.toString());
-			System.out.println(loginUser.toString());
+			UserBean inputUser = ex.instanceUser(id, password, name, address, adminflg, "select");
+			next = "userConfirm.jsp";
 			
-		} 
+			boolean isNameChanged = !originUser.getName().equals(inputUser.getName());
+			boolean isAddressChanged = !originUser.getAddress().equals(inputUser.getAddress());
+			boolean isPassChanged = !originUser.getPassword().equals(inputUser.getPassword());
+			boolean isAdminChanged = !originUser.getAdminflg().equals(inputUser.getAdminflg());
+			
+			boolean isNoChange = !(isNameChanged || isAddressChanged || isPassChanged || isAdminChanged);
+			
+			
+			// 変更内容が無い場合
+			if(isNoChange) {
+				
+				next = "userUpdate.jsp";
+				request.setAttribute("error", "変更がありません。");
+			
+			// 変更対象が管理権限、管理権限を無くす変更、最後の管理者の場合の場合
+			} else if(originUser.getAdminflg().equals("1") && isAdminChanged 
+					&& inputUser.getAdminflg().equals("0") && UserDao.lastAdmin()) {
+			
+				next = "userUpdate.jsp";
+				request.setAttribute("error", "最後の管理者は管理権限の変更ができません。");
+			
+			} else if(originUser.getAdminflg().equals("1") && isAdminChanged 
+					&& inputUser.getAdminflg().equals("0")
+					&& inputUser.getId().equals(loginUser.getId())) {
+				
+				next = "userUpdate.jsp";
+				request.setAttribute("error", "管理者は自身の管理権限の変更はできません。");
+				
+				// パスワードの変更があり、パスワードが既に使用されている場合
+			} else if(isPassChanged && !UserDao.checkPass(inputUser)) {
+			
+				next = "userUpdate.jsp";
+				request.setAttribute("error", "このパスワードは使用されています。");
+			
+			} else {
+			
+				next = "userConfirm.jsp";
+			
+			}
+			
+			session.setAttribute("user", inputUser);
+			
+		}  catch (NullPointerException e) {
+			next = "userError.jsp";
+			request.setAttribute("error", "不正な操作です。");
+			System.out.println(e);
+		} catch (Exception e) {
+			next = "userError.jsp";
+			request.setAttribute("error", "不明なエラーです。");
+			System.out.println(e);
+		}
+		
+		session.setAttribute("page", "update");
 		
 		RequestDispatcher rd = request.getRequestDispatcher("jsp/userSituation/" + next);
 		rd.forward(request, response);

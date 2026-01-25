@@ -10,6 +10,13 @@
 </head>
 <body>
 
+	<c:set var="ex" value="${sessionScope.ExtraMR}" />
+	<c:set var="users" value="${loginUser}" />
+	
+	<c:if test="${not empty searchUser}">
+		<c:set var="users" value="${searchUser}" />
+	</c:if>
+		
 	<%@ include file="/jsp/includeFile/includeUserName.jsp" %>
 	
 	<div class="title1">
@@ -24,77 +31,61 @@
 		<h2>ユーザー情報変更</h2>
 	</div>
 	
-	<c:if test="${loginUser.adminflg == '1'}">
-		<div class="user-search">
-			<form action="<%= request.getContextPath() %>/UpdateUser" method="POST">
-				<span>検索ID:</span>
-				<input type="text" name="userId" pattern="[0-9]*">
-				<input type="hidden" name="flg" value="search">
-				<input type="submit" value="検索">
-			</form>
-		</div>
-		
-		<div class="hr">
-			<hr>
+	<c:if test="${error != null}">
+		<div class="error">
+			${error}
 		</div>
 	</c:if>
 	
-	<c:if test="${flg == 'search'}">
-		<div class="contents1">
-			検索した利用者を表示します。
-		</div>
-	</c:if>
+	${userId}
 	
-	<c:if test="${flg == null}">
-		<c:set var="flg" value="noSearch" />
-	</c:if>
-	
-	<div class="contents1">
+	<div class="contents2">
+			
 		<form action="<%= request.getContextPath() %>/UpdateUser" method="POST">
 			<div class="input-user">
-				<span class="user-name">氏名:</span>
-				<input type="text" name="name" placeholder="田中太郎" value="${flg == 'search' ? user.name : loginUser.name}" required>
+				<span class="user-name">ID：</span>
+				<input type="text" name="id" value="${user != null ? user.id : users.id}" readonly required>
 			</div>
 
 			<div class="input-user">
-				<span class="user-name">ID:</span>
-				<input type="text" name="id" value="${flg == 'search' ? user.id : loginUser.id}" readonly required>
+				<span class="user-name">氏名：</span>
+				<input type="text" name="name" placeholder="田中太郎" value="${user != null ? user.name : users.name}" required>
 			</div>
 			
 			<div class="input-user">
-				<span class="user-name">住所:</span>
-				<input type="text" name="address" value="${flg == 'search' ? user.address : loginUser.address}" required>
+				<span class="user-name">住所：</span>
+				<input type="text" name="address" value="${user != null ? user.address : users.address}" required>
 			</div>
 
 			<div class="input-user">
-				<span class="user-name">PW:</span>
-				<input type="text" name="password" minlength="6" maxlength="10" pattern="[0-9a-zA-Z]*" placeholder="半角英数字6～10文字" value="${flg == 'search' ? user.password : loginUser.password}" required>
+				<span class="user-name">PW：</span>
+				<input type="text" name="password" minlength="6" maxlength="10" pattern="[0-9a-zA-Z]*" placeholder="半角英数字6～10文字" value="${user != null ? user.password : users.password}" required>
 			</div>
 			
 			<c:if test="${loginUser.adminflg == '1'}">
 				<div class="input-user">
-					<span class="user-name">管理者権限:</span>
-					<input type="checkbox" name="admin" value="1" ${(flg == "search" ? user.adminflg : loginUser.adminflg) == "1" ? "checked" : ""}>
+					<span class="user-name">管理者権限：</span>
+					<input type="checkbox" name="adminflg" value="1" ${(user != null ? user.adminflg : users.adminflg) == "1" ? "checked" : ""}>
 				</div>
 			</c:if>
 			
-			<input type="hidden" name="flg" value="input">
-			
-			<div class="button1">
+			<div class="hr">
+				<hr>
+			</div>
+
+			<div class="button3">
+				<c:if test="${userId == null || empty userId}">
+					<button type="button" onclick="location.href='<%= request.getContextPath() %>/jsp/menu.jsp'">戻る</button>
+				</c:if>
+				
+				<c:if test="${userId != null || not empty userId}">
+					<button type="button" onclick="location.href='<%= request.getContextPath() %>/jsp/userSituation/userSearch.jsp'">戻る</button>
+				</c:if>
+				
 				<input type="submit" value="決定">
 			</div>
 		</form>
+				
 	</div>
-
-	<div class="hr">
-		<hr>
-	</div>
-
-	<div class="button1">
-		<form action="<%= request.getContextPath() %>/jsp/menu.jsp">
-			<input type="submit" value="戻る">
-		</form>
-	</div>
-
 </body>
 </html>

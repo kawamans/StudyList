@@ -43,7 +43,7 @@
 		</c:choose>
 	</div>
 
-	<div class="contents1">
+	<div class="contents2">
 		<p>
 			<c:out value="${errorReason}" />
 		</p>

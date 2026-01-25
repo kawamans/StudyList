@@ -23,7 +23,7 @@ public class LoginUrlFilter extends HttpFilter implements Filter {
 	/** @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain) */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
+		//未ログイン時、ログイン画面へリダイレクト
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpRessonse = (HttpServletResponse) response;
 		HttpSession session = httpRequest.getSession(false);
@@ -34,7 +34,7 @@ public class LoginUrlFilter extends HttpFilter implements Filter {
 		boolean isLogin = (session != null && session.getAttribute("loginUser") != null);
 		
 		// 公開ページの判定(startsWith を使用してフォルダ配下を許可）
-		boolean isPublicPage = (path.equals("/jsp/login.jsp") || path.equalsIgnoreCase("/Login") || path.startsWith("/css/"));
+		boolean isPublicPage = (path.equals("/jsp/login.jsp") || path.equalsIgnoreCase("/Login") || path.startsWith("/css/") || path.startsWith("/img/"));
 		
 		// 各URL直打ち禁止ページの判定
 		boolean isReservePage = (path.equals("/jsp/reservation/reserveConfirm.jsp") || path.equals("/jsp/reservation/reserveError.jsp") || path.equals("/jsp/reservation/reserved.jsp"));

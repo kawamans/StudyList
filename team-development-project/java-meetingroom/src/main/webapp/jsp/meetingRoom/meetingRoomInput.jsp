@@ -30,29 +30,33 @@
 	</div>
 
 	<div class="contents1">
-		<form action="<%=request.getContextPath()%>/CreateAdd" method="post">
+		<form action="<%=request.getContextPath()%>/CreateMeetingRoom" method="post">
+
 			<div class="input-user">
 			<span class="user-name">会議室名:</span>
-			<span class="user-data"><input type="text" name="roomId" required></span><br>
+			<span class="user-data"><input type="text" name="roomId" minlength="1" maxlength="20" 
+				placeholder = "大会議室" required></span><br>
 			</div>
 			<div class="input-user">
 			<span class="user-name">階数:</span>
-			<span class="user-data"><input type="text" name="floorNum" required></span><br>
+			<span class="user-data"><input type="text" name="floorNum" minlength="1" maxlength="2"
+				 pattern="^[0-9]{1,2}$" placeholder = "半角数字1～2文字" required></span><br>
 			</div>
 			<div class="input-user">
 			<span class="user-name">部屋番号:</span>
-			<span class="user-data"><input type="text" name="roomNum" required></span><br>
+			<span class="user-data"><input type="text" name="roomNum" minlength="1" maxlength="2" 
+				pattern="^[0-9]{1,2}$" placeholder = "半角数字1～2文字" required></span><br>
 			</div>
+
 			<hr>
-			<div class="button1">
+
+
+
+			<div class="button3">
+				<button type="button" onclick="location.href='<%=request.getContextPath()%>/jsp/menu.jsp'">戻る</button>
 				<input type="submit" value="登録">
-				
 			</div>
 		</form>
-		<div class="button1">
-			<form action="<%=request.getContextPath()%>/jsp/menu.jsp" method="post">
-			<input type=submit value="戻る"></form>
-			</div>
 	</div>
 
 </body>
