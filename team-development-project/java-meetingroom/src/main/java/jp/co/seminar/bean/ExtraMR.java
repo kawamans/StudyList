@@ -45,6 +45,9 @@ public class ExtraMR implements Serializable {
 		return userList;
 	}
 	
+	/**
+	 * 利用者情報新規取得用メソッド
+	 */
 	public void renewUserList() {
 		this.userList = UserDao.findUser();
 	}
@@ -232,7 +235,9 @@ public class ExtraMR implements Serializable {
 			throw new AppException.LogicalDeleteUserFailedException("削除に失敗しました。");
 		}
 		
+		// 削除対象が予約をしていた場合実行
 		if(ReservationDao.checkReserveUser(userBean.getId())) {
+			// 予約削除処理を実行
 			if(!ReservationDao.userReserveDelete(userBean.getId())) {
 				throw new AppException.DeleteRoomFailedException("会議室の削除に失敗しました。");
 			}

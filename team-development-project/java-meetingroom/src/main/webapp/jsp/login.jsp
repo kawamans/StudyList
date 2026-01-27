@@ -10,7 +10,6 @@
 </head>
 	<body>
 		
-
 		<c:set var="meetingRoom" value="${ sessionScope.meetingRoom }" />
 	
 		<%
@@ -21,6 +20,8 @@
 				rd.forward(request, response);
 			}
 		%>
+		
+		<%-- タイトル --%>
 		<div class="title1">
 			<h1>会議室予約</h1>
 		</div>
@@ -28,27 +29,40 @@
 		<div class="hr">
 			<hr>
 		</div>
-		<div class="logo-top">
-			<img src="${pageContext.request.contextPath}/img/logo-top-ts.png" alt="ロゴ" width="400">
-		</div>
-		<div class="title2">
-			<h2>ログイン</h2>
-		</div>
-			<c:if test="${not empty message}">
-    			<div class="error">
-        			${message}
-    			</div>
-			</c:if>
-			
-			<div class="contents1">
-				<form action="<%= request.getContextPath() %>/Login" method="post">
-				<div class="label">利用者ID:</div> <input type="text" name="userId" value="${userId != null ? userId : ''}"><br>
-				<div class="label">パスワード:</div> <input type="password" name="userPw"><br>
-				<div class="button1">
-					<input type="submit" value="ログイン">
-				</div>
-			</form>
+		
+		
+		<div class="field1">
+		
+			<%-- 左側：ロゴ画像 --%>
+			<div class="left-area">
+				<img src="${pageContext.request.contextPath}/img/logo-top-ts.png" alt="ロゴ">
 			</div>
-
+			
+			<%-- 右側：タイトル＋ログインフォーム --%>
+			<div class="right-area">
+				
+				<%-- タイトル --%>
+				<div class="title2-login">
+				<h2>ログイン</h2>
+				</div>
+				<c:if test="${not empty message}">
+    				<div class="error">
+        			${message}
+    				</div>
+				</c:if>
+			
+				<%-- ログインフォーム --%>
+				<div class="contents1-login">
+					<form action="<%= request.getContextPath() %>/Login" method="post">
+					<div class="contents1-label">利用者ID:</div> <input type="text" name="userId" value="${userId != null ? userId : ''}"><br>
+					<div class="contents1-label">パスワード:</div> <input type="password" name="userPw"><br>
+					<div class="button1">
+						<input type="submit" value="ログイン">
+					</div>
+				</form>
+				
+			</div>
+			</div>
+		 </div>
 	</body>
 </html>

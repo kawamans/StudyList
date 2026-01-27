@@ -11,8 +11,9 @@
 <body>
 	
 	<c:set var="ex" value="${sessionScope.ExtraMR}" />
-	<c:set var="users" value="${loginUser}" />
 	
+	<%-- 表示内容をセット --%>
+	<%-- 削除対象の情報をセット --%>
 	<c:if test="${not empty searchUser}">
 		<c:set var="users" value="${searchUser}" />
 	</c:if>
@@ -36,8 +37,6 @@
 			${error}
 		</div>
 	</c:if>
-	
-	${userId}
 
 	<div class="contents1">
 		<form action="<%= request.getContextPath() %>/DeleteUser" method="POST">
@@ -69,7 +68,7 @@
 			<div class="input-user">
 				<span class="user-name">管理者権限：</span>
 				<span class="user-data">${users != null ? (users.adminflg == '1' ? 'あり' : 'なし') : ''}</span>
-				<input type="hidden" name="password" value="${users != null ? users.adminflg : ''}">
+				<input type="hidden" name="adminflg" value="${users != null ? users.adminflg : ''}">
 			</div>
 			
 			<div class="hr">
@@ -85,7 +84,6 @@
 			</div>
 		
 		</form>
-		
 	</div>
 </body>
 </html>

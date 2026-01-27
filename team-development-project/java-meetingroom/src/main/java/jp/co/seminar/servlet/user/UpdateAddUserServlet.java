@@ -41,10 +41,12 @@ public class UpdateAddUserServlet extends HttpServlet {
 		UserBean user = (UserBean)session.getAttribute("user");
 		LoginUserBean loginUser = (LoginUserBean)session.getAttribute("loginUser");
 		
+		// 変更内容がログイン者本人かを確認
 		boolean isChangeLoginUser = (loginUser.getId().equals(user.getId()));
 		
 		boolean isInputData = false;
 		
+		// 入力内容とsessionの内容と一致しているか確認
 		try {
 			isInputData = (user.getId().equals(request.getParameter("id"))
 					&& user.getName().equals(request.getParameter("name")) 
@@ -58,12 +60,14 @@ public class UpdateAddUserServlet extends HttpServlet {
 			System.out.println(e);
 		}
 		
+		// 入力内容の整合性が取れていれば実行
 		if (isInputData) {
 			try {
 				ex.updateUser(user);
 				user = ex.getUser();
 				next = "userCompletion.jsp";
 				
+				// ログイン本人の内容の変更の場合はログイン情報の更新を実行
 				if(isChangeLoginUser) {
 					
 					loginUser = new LoginUserBean(user.getId(), user.getPassword(),

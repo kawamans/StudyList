@@ -44,6 +44,7 @@ public class DeleteAddUserServlet extends HttpServlet {
 		
 		boolean isInputData = false;
 		
+		// 入力情報とsession情報の整合性を確認
 		try {
 			isInputData = (user.getId().equals(request.getParameter("id"))
 					&& user.getName().equals(request.getParameter("name")) 
@@ -56,9 +57,11 @@ public class DeleteAddUserServlet extends HttpServlet {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-			
+		
+		// 入力情報に整合性が取れていれば実行
 		if (isInputData) {
 			try {
+				// 削除対象がログイン本人で無ければ実行
 				if(loginUser != null && user != null && !loginUser.getId().equals(user.getId())) {
 					
 					ex.logicalDeleteUser(user);

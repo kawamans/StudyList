@@ -42,18 +42,23 @@ public class SearchUserServlet extends HttpServlet {
 		try {
 			
 			ExtraMR ex = (ExtraMR)session.getAttribute("ExtraMR");
+			// DB内の全ての利用者情報を取得
 			List<UserBean> userList = ex.getUserList();
 			
+			// 検索用のuserIdの内容が存在していれば実行
 			if (userId != null && !userId.isEmpty()) {
 				
+				// 検索命令フラグが存在していれば実行 
 				if("search".equals(flg)) {
 					
+					// Listに取得した利用者情報からuserIdを検索
 					for (UserBean users : userList) {
 						if(users.getId().equals(userId)) {
 							searchUser.add(users);
 						}
 					}
 					
+					// 検索内容で表示を分岐
 					if (searchUser.size() > 0) {
 						request.setAttribute("searchUser", searchUser);
 						request.setAttribute("userId", userId);
@@ -68,14 +73,17 @@ public class SearchUserServlet extends HttpServlet {
 					
 				} else {
 					
+					// 削除・変更の場合は対象のIDから対象を取得
 					for (UserBean users : userList) {
 						if(users.getId().equals(userId)) {
 							user = users;
 						}
 					}
 					
+					// 遷移先で使用する情報をsessionにセット
 					session.setAttribute("searchUser", user);
 					
+					// 取得したフラグから遷移先を決定する
 					if("delete".equals(flg)) {
 						next = "userDelete.jsp";
 					} else {

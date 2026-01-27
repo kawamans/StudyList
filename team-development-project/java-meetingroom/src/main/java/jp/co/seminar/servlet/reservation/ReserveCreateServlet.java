@@ -16,9 +16,6 @@ import jp.co.seminar.bean.RoomBean;
 
 /**
  * 予約を生成する。
- * リクエストで受け取った会議室、開始時刻を基に会議予約システムより予約を生成する。
- * 後続する処理に備えて予約および予約する会議をセッション属性にセットし、
- * 予約確認画面に遷移する。
  * @author 石坂迪大
  */
 
@@ -56,25 +53,31 @@ public class ReserveCreateServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() +
 					"/jsp/reservation/reserveConfirm.jsp");
 			
-			//生成失敗時
+		//生成失敗時
 		} catch (AppException.ReservationFailedException e) {
 			e.printStackTrace();
 			request.setAttribute("errorReason", e.getMessage());
 			request.getRequestDispatcher("/jsp/reservation/reserveError.jsp")
 					.forward(request, response);
 			return;
+		
+		//既に予約されている場合の例外
 		}catch (AppException.AlreadyReservedException e) {
 			e.printStackTrace();
 			request.setAttribute("errorReason", e.getMessage());
 			request.getRequestDispatcher("/jsp/reservation/reserveError.jsp")
 					.forward(request, response);
 			return;
+		
+		//予約時間が過ぎている場合の例外
 		}catch (AppException.TimePassedException e) {
 			e.printStackTrace();
 			request.setAttribute("errorReason",  e.getMessage());
 			request.getRequestDispatcher("/jsp/reservation/reserveError.jsp")
 					.forward(request, response);
 			return;
+		
+		//その他の例外処理
 		}catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("errorReason",  e.getMessage());

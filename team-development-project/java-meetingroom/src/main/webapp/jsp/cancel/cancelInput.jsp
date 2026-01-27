@@ -65,7 +65,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th>会議室＼時間帯</th>
+					<th>会議室名(ID)＼時間帯</th>
 					<!-- 上部横方向時間（period）の繰り返し -->
 					<c:forEach var="t" items="${meetingRoom.period}">
 						<th><c:out value="${t}" /></th>
@@ -79,9 +79,9 @@
 					<tr>
 
 						<%--会議室名の表示 --%>
-						<th scope="row"><c:out value="${r.name }" /></th>
+						<th scope="row"><c:out value="${r.name}" />(<c:out value="${r.id }"></c:out>)</th>
 
-						<%--時間帯ごとのセル生成 --%>
+						<%--時間帯ごとに予約情報を入れるセル生成 --%>
 						<c:forEach var="t" items="${periods}">
 							<c:set var="ri" value="${meetingRoom.roomIndex(r.id)}" />
 							<c:set var="pi" value="${meetingRoom.startPeriod(t)}" />

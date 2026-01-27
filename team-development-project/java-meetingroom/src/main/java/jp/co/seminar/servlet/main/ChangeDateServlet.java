@@ -1,7 +1,6 @@
 package jp.co.seminar.servlet.main;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 /**
  * 利用日の変更する。
@@ -42,7 +41,6 @@ public class ChangeDateServlet extends HttpServlet {
 		// リクエストパラメータ取得
 		String date = request.getParameter("date");
 		String page = request.getParameter("page");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		//値をセット
 		meetingRoom.setDate(date);

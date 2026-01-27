@@ -13,7 +13,7 @@
 	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
-
+	
 	<%-- ログイン中のユーザー名表示 --%>
 	<%@ include file="/jsp/includeFile/includeUserName.jsp"%>
 
@@ -34,18 +34,18 @@
 
 			<div class="input-user">
 			<span class="user-name">会議室名:</span>
-			<span class="user-data"><input type="text" name="roomId" minlength="1" maxlength="20" 
-				placeholder = "大会議室" required></span><br>
+			<span class="user-data"><input type="text" name="roomId" pattern=".*\S+.*" minlength="1" maxlength="20" 
+				placeholder = "レンタル会議室" value="${room != null ? room.name : ''}" required></span><br>
 			</div>
 			<div class="input-user">
 			<span class="user-name">階数:</span>
-			<span class="user-data"><input type="text" name="floorNum" minlength="1" maxlength="2"
-				 pattern="^[0-9]{1,2}$" placeholder = "半角数字1～2文字" required></span><br>
+			<span class="user-data"><input type="text" name="floorNum" maxlength="2"
+				 pattern="[0-9]*" placeholder = "半角数字" value="${room != null ? room.floor : ''}" required></span><br>
 			</div>
 			<div class="input-user">
 			<span class="user-name">部屋番号:</span>
-			<span class="user-data"><input type="text" name="roomNum" minlength="1" maxlength="2" 
-				pattern="^[0-9]{1,2}$" placeholder = "半角数字1～2文字" required></span><br>
+			<span class="user-data"><input type="text" name="roomNum" maxlength="5" 
+				pattern="[0-9a-zA-Z]*" placeholder = "半角英数字" value="${room != null ? room.roomNumber : ''}" required></span><br>
 			</div>
 
 			<hr>

@@ -41,6 +41,7 @@ public class DeleteUserServlet extends HttpServlet {
 			ExtraMR ex = (ExtraMR)session.getAttribute("ExtraMR");
 			LoginUserBean loginUser = (LoginUserBean)session.getAttribute("loginUser");
 			
+			// ログイン者本人は削除できないようにブロック
 			if (loginUser.getId().equals(id) && id != null) {
 				
 				next = "userDelete.jsp";

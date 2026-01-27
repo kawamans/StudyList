@@ -9,10 +9,13 @@
 <link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.css">
 </head>
 <body>
-
-	<c:set var="ex" value="${sessionScope.ExtraMR}" />
-	<c:set var="users" value="${loginUser}" />
 	
+	<c:set var="ex" value="${sessionScope.ExtraMR}" />
+	
+	<%-- 表示内容をセット --%>
+	<%-- ログイン者本人の情報をセット --%>
+	<c:set var="users" value="${loginUser}" />
+	<%-- 検索情報があれば検索情報をセット --%>
 	<c:if test="${not empty searchUser}">
 		<c:set var="users" value="${searchUser}" />
 	</c:if>
@@ -37,24 +40,22 @@
 		</div>
 	</c:if>
 	
-	${userId}
-	
 	<div class="contents2">
 			
 		<form action="<%= request.getContextPath() %>/UpdateUser" method="POST">
 			<div class="input-user">
 				<span class="user-name">ID：</span>
-				<input type="text" name="id" value="${user != null ? user.id : users.id}" readonly required>
+				<input type="text" name="id" maxlength="10" value="${user != null ? user.id : users.id}" readonly required>
 			</div>
 
 			<div class="input-user">
 				<span class="user-name">氏名：</span>
-				<input type="text" name="name" placeholder="田中太郎" value="${user != null ? user.name : users.name}" required>
+				<input type="text" name="name" placeholder="インテックス太郎" pattern=".*\S+.*" value="${user != null ? user.name : users.name}" required>
 			</div>
 			
 			<div class="input-user">
 				<span class="user-name">住所：</span>
-				<input type="text" name="address" value="${user != null ? user.address : users.address}" required>
+				<input type="text" name="address" maxlength="30" pattern=".*\S+.*" value="${user != null ? user.address : users.address}" required>
 			</div>
 
 			<div class="input-user">
@@ -74,10 +75,13 @@
 			</div>
 
 			<div class="button3">
+				<%-- 検索情報の有無で遷移先を判定 --%>
+				<%-- ログイン者本人の変更であれば戻るのはmenu画面 --%>
 				<c:if test="${userId == null || empty userId}">
 					<button type="button" onclick="location.href='<%= request.getContextPath() %>/jsp/menu.jsp'">戻る</button>
 				</c:if>
 				
+				<%-- 検索対象の変更であれば戻るのはsearch画面 --%>
 				<c:if test="${userId != null || not empty userId}">
 					<button type="button" onclick="location.href='<%= request.getContextPath() %>/jsp/userSituation/userSearch.jsp'">戻る</button>
 				</c:if>

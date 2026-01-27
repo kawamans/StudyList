@@ -202,6 +202,11 @@ public class ReservationDao {
 	}
 	
 	
+	/**
+	 * 利用者論理削除時に利用者が予約した予約情報を全削除
+	 * @param userId
+	 * @return 実行されれば true
+	 */
 	public static boolean userReserveDelete(String userId) {
 		String deleteSql = "DELETE FROM reservation WHERE userid = ?";
 		boolean found = false;

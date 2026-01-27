@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <c:set var="pageName" value="${sessionScope.page}" />
+
+<%-- Servlet元の種類に応じて表示と遷移先ページを切替 --%>
 <c:choose> 
 	<c:when test="${pageName == 'create'}">
 		<c:set var="message" value="登録完了" />

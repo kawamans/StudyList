@@ -1,18 +1,20 @@
 
-* {
-    text-align: center;
-}
-
 body {
     font-family: sans-serif;
     background-color: #f5f5f5;
     color: #333;
     padding: 20px;
+    text-align: center;
+}
+
+input[type="checkbox"] {
+	margin: auto 115px;
+	cursor: pointer;  
 }
 
 .title1 {
     font-size: 20px;
-    margin: 20px 0;
+    margin: 70px 0 20px 0;
 }
 
 .title2 {
@@ -63,15 +65,16 @@ hr {
     margin: 15px 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+	align-items: center;
+    text-align: right;
     gap: 20px;
 }
 
 .room-name, .user-name{
     display: inline-block;
-    width: 120px;
-    text-align: right;
+    width: 100px;
     font-size: 16px;
+    margin: auto 0;
 }
 
 .user-data {
@@ -222,6 +225,18 @@ hr {
 }
 
 /* 予約セル用スタイル */
+.reserve-user{
+	color: #FE7E39;
+}
+
+.reserve-ok{
+	color:blue;
+}
+
+.reserve-no{
+	color:red;
+}
+
 .reservation-available form {
     margin: 0;
     padding: 0;
@@ -253,7 +268,13 @@ hr {
 	margin: 30px, 0px;
 }
 
-.menu-left, menu-right{
+.menu-left {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.menu-right{
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
@@ -271,9 +292,69 @@ hr {
 	background-color: #0066cc;
 	color: white;
 	border: none;
-	
 }
 
+/* ログイン画面 */
+.field1 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 80%;
+    margin: 20px auto;
+    height: 500px;
+    box-sizing: border-box;
+}
+
+.right-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 50%;
+    height: auto;
+    text-align: left;
+}
+
+.left-area {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.left-area img {
+    max-width: 80%;
+    max-height: 100%;
+}
+
+.title2-login {
+/*    padding: 10px;*/
+    box-sizing: border-box;
+    text-align: left;
+    font-size: 1.5em;
+    margin-top: 25px;
+}
+
+.contents1-login {
+/*    padding: 10px;*/
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.contents1-label {
+    display: inline-block;
+    width: 90px;
+    text-align: left
+}
+
+/* ラップする右側エリア */
+.field1 > .title2-login,
+.field1 > .contents2-login {
+    display: block;
+}
+
+.field1 > div:nth-child(2), 
+.field1 > div:nth-child(3) {
+    width: 50%;
+}
 
 /* 旧スタイル */
 title1 {
@@ -288,17 +369,30 @@ content {
     text-align: center;
 }
 
-/*ユーザー名表示*/
-.user-name{
-
+/*ヘッダーロゴ画像*/
+.header-logo img {
+	width: 100px;
 }
 
 /*ログインユーザー表示*/
 .login-user-name {
-	position: absolute;
+	display: flex;
 	top: 20px;
-	right: 30px;
+	left: 30px;
 	font-size: 14px;
 	color: #666;
 	padding: 8px 15px;
+	text-align: left;
+	position: absolute;
+	transform: translateY(10px);
 }
+
+.user-name2{
+	display: inline-block;
+    width: 300px;
+    font-size: 16px;
+    margin: auto 0;
+}
+
+/*.user-name {*/
+/*}*/

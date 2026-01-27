@@ -48,9 +48,12 @@ public class UpdateUserServlet extends HttpServlet {
 			UserBean searchUser = (UserBean)session.getAttribute("searchUser");
 			UserBean originUser = null;
 			
+			// 検索ユーザーかログインユーザーを判別
 			if(searchUser != null) {
+				// 検索ユーザーであればオリジン変数に代入
 				originUser = searchUser;
 			} else {
+				// ログインユーザーであればLoginUserBeanをUserBeanに変換してオリジン変数に代入
 				originUser = new UserBean(
 						loginUser.getId(), loginUser.getPassword(),loginUser.getName(),
 						loginUser.getAddress(), loginUser.getAdminflg(), "select");
@@ -58,14 +61,20 @@ public class UpdateUserServlet extends HttpServlet {
 			
 			ExtraMR ex = (ExtraMR)session.getAttribute("ExtraMR");
 			
+			// submitした内容を代入
 			UserBean inputUser = ex.instanceUser(id, password, name, address, adminflg, "select");
 			next = "userConfirm.jsp";
 			
+			// 氏名の変更
 			boolean isNameChanged = !originUser.getName().equals(inputUser.getName());
+			// 住所の変更
 			boolean isAddressChanged = !originUser.getAddress().equals(inputUser.getAddress());
+			// パスワードの変更
 			boolean isPassChanged = !originUser.getPassword().equals(inputUser.getPassword());
+			// 管理者権限の変更
 			boolean isAdminChanged = !originUser.getAdminflg().equals(inputUser.getAdminflg());
 			
+			// 全ての変更
 			boolean isNoChange = !(isNameChanged || isAddressChanged || isPassChanged || isAdminChanged);
 			
 			
@@ -82,6 +91,7 @@ public class UpdateUserServlet extends HttpServlet {
 				next = "userUpdate.jsp";
 				request.setAttribute("error", "最後の管理者は管理権限の変更ができません。");
 			
+			// 変更対象がログイン者本人で管理権限を無くす変更の場合
 			} else if(originUser.getAdminflg().equals("1") && isAdminChanged 
 					&& inputUser.getAdminflg().equals("0")
 					&& inputUser.getId().equals(loginUser.getId())) {
@@ -89,18 +99,20 @@ public class UpdateUserServlet extends HttpServlet {
 				next = "userUpdate.jsp";
 				request.setAttribute("error", "管理者は自身の管理権限の変更はできません。");
 				
-				// パスワードの変更があり、パスワードが既に使用されている場合
+			// パスワードの変更があり、パスワードが既に使用されている場合
 			} else if(isPassChanged && !UserDao.checkPass(inputUser)) {
 			
 				next = "userUpdate.jsp";
 				request.setAttribute("error", "このパスワードは使用されています。");
 			
+			// 変更内容に問題がない場合
 			} else {
 			
 				next = "userConfirm.jsp";
 			
 			}
 			
+			// 入力内容をsessionへ
 			session.setAttribute("user", inputUser);
 			
 		}  catch (NullPointerException e) {

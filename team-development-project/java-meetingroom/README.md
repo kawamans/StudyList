@@ -1,12 +1,12 @@
 ### タスク進捗
 | ﾒﾝﾊﾞｰ | jsp | 進捗率 | 処理1 | 進捗率 | 処理2 | 進捗率 | 特定作業 | 進捗率 |
 | :--- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | 
-| 川満 | user | 90% | extra(J) | 95% | user(S) | 90% | DAO(J) | 95% |
-| 猪本 | roomDel | 95% | service(J) | 90% | roomAdd(S) | 90% | CSS(M) | 80% |
-| 谷田 | roomAdd | 95% | DAO(J) | ―% | roomDel(S) | 90% | test | - |
-| 飯田 | cancel | 95% | cancel(S) | 95% | roomDel(S) | 90% | test | - |
-| 山崎 | login | 95% | login(S) | 95% | test | - | - | - |
-| 石坂 | reserv | 95% | reserv(S) | 95% | roomAdd(S) | 90% | test | image |
+| 川満 | user | 100% | extra(J) | 100% | user(S) | 100% | DAO(J) | 100% |
+| 猪本 | roomDel | 100% | service(J) | 100% | roomAdd(S) | 100% | CSS(M) | 100% |
+| 谷田 | roomAdd | 100% | DAO(J) | ―% | roomDel(S) | 100% | test | - |
+| 飯田 | cancel | 100% | cancel(S) | 100% | roomDel(S) | 100% | test | - |
+| 山崎 | login | 100% | login(S) | 100% | test | - | - | - |
+| 石坂 | reserv | 100% | reserv(S) | 100% | roomAdd(S) | 100% | test | image |
 
 ``` diff
 java-meetingroom/ ✅ 🟡 🔴
@@ -32,21 +32,21 @@ java-meetingroom/ ✅ 🟡 🔴
 +       │   ├── EncodingFilter.java
 +       │   ├── LoginUrlFilter.java
 +       │   └── SessionFilter.java
-        ├── servlet/main/       # [Controller] 🟡 90% (山崎)
+        ├── servlet/main/       # [Controller] ✅ 100% (山崎)
 +       │   ├── ChangeDateServlet.java  # 山﨑 $
 +       │   ├── LoginServlet.java  # 山﨑 $
 +       │   └── LogoutServlet.java  # 山﨑 $
-        ├── servlet/meetingRoom/# [Controller] 🟡 90% (飯田/谷田)
+        ├── servlet/meetingRoom/# [Controller] ✅ 100% (飯田/谷田)
 +       │   ├── CreateAddMeetingRoom.java  # 山﨑 $
 +       │   ├── CreateMeetingRoom.java  # 山﨑 $
 +       │   ├── DeleteAddMeetingRoom.java  # 山﨑 $
 +       │   └── DeleteMeetingRoom.java  # 山﨑 $
-        ├── servlet/reservation/# [Controller] 🟡 95% (飯田/石坂)
+        ├── servlet/reservation/# [Controller] ✅ 100% (飯田/石坂)
 +       │   ├── CancelCreateServlet.java  # 山﨑 $
 +       │   ├── CancelServlet.java  # 山﨑 $
 +       │   ├── ReserveCreateServlet.java  # 山﨑 $
 +       │   └── ReserveServlet.java  # 山﨑 $
-        ├── servlet/user/       # [Controller] 🟡 90% (川満)
+        ├── servlet/user/       # [Controller] ✅ 100% (川満)
 +       │   ├── CreateAddUserServlet.java
 +       │   ├── CreateUserServlet.java
 +       │   ├── DeleteAddUserServlet.java
@@ -57,29 +57,29 @@ java-meetingroom/ ✅ 🟡 🔴
 +           ├── DatabaseConfig.java
 +           └── DatabaseConnection.java
     └── webapp/
-+       ├── css/style.css       # CSSデザイン 🟡 90% (猪本)
++       ├── css/style.css       # CSSデザイン ✅ 100% (猪本)
         └── jsp/                # [View] 画面表示
-+           ├── login.jsp       # ログイン    🟡 95% (山崎)
-+           ├── menu.jsp        # メニュー    🟡 95% (山崎)
-            ├── cancel/         # 予約取消    🟡 95% (飯田)
++           ├── login.jsp       # ログイン    ✅ 100% (山崎)
++           ├── menu.jsp        # メニュー    ✅ 100% (山崎)
+            ├── cancel/         # 予約取消    ✅ 100% (飯田)
 +           │   ├── cancelConfirm.jsp
 +           │   ├── cancelError.jsp
 +           │   ├── cancelInput.jsp
 +           │   └── canceled.jsp
             ├── includeFile/    # 共通部品 ✅ 100% (猪本/石坂)
 +           │   └── includeUserName.jsp
-            ├── meetingRoom/    # 会議室管理 🟡 90% (猪本/石坂)
+            ├── meetingRoom/    # 会議室管理 ✅ 100% (猪本/石坂)
 +           │   ├── meetingRoomCompletion.jsp
 +           │   ├── meetingRoomConfirm.jsp
 +           │   ├── meetingRoomDelete.jsp
 +           │   ├── meetingRoomError.jsp
 +           │   └── meetingRoomInput.jsp
-            ├── reservation/    # 予約登録    🟡 95% (石坂)
+            ├── reservation/    # 予約登録    ✅ 100% (石坂)
 +           │   ├── reserveConfirm.jsp
 +           │   ├── reserveError.jsp
 +           │   ├── reserveInput.jsp
 +           │   └── reserved.jsp
-            └── userSituation/  # ユーザ管理  🟡 90% (川満)
+            └── userSituation/  # ユーザ管理  ✅ 100% (川満)
 +               ├── userCompletion.jsp
 +               ├── userConfirm.jsp
 +               ├── userCreate.jsp
@@ -87,6 +87,16 @@ java-meetingroom/ ✅ 🟡 🔴
 +               ├── userError.jsp
 +               └── userUpdate.jsp
 ```
+
+| name | Commit | 追加 | 削除 | 合計差分 | 
+| :--- | ---: | ---: | ---: | ---: |
+| kawamitsu | 92 | 5246 | 2890 | 2356 |
+| inomoto   | 80 | 3247 | 1205 | 2042 |
+| ishizaka  | 64 | 1602 | 987  | 615  |
+| tanida    | 47 | 1772 | 1260 | 512  |
+| ida       | 52 | 1031 | 614  | 417  |
+| yamazaki  | 58 | 767  | 421  | 346  |
+
 
 ### 1. kawamitsu
 | Date | Commit | 追加 | 削除 | 合計差分 | 増加数 |

@@ -54,8 +54,6 @@ public class CreateUserServlet extends HttpServlet {
 		session.setAttribute("user", user);
 		session.setAttribute("page", "create");
 		
-		System.out.println(user.toString());
-		
 		RequestDispatcher rd = request.getRequestDispatcher("jsp/userSituation/" + next);
 		rd.forward(request, response);
 	

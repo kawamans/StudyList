@@ -49,39 +49,30 @@ public class CancelServlet extends HttpServlet {
 					"/jsp/cancel/canceled.jsp");
 			//以下失敗
 		} catch (AppException.TimePassedException e) {
-
-			
 			request.setAttribute("errorReason", e.getMessage());
 			request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
 					.forward(request, response);
 			return;
 
 		} catch (AppException.UnauthorizedCancelException e) {
-
-			
 			request.setAttribute("errorReason", e.getMessage());
 			request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
 					.forward(request, response);
 			return;
 
 		} catch (AppException.CancelFailedException e) {
-
-			
 			request.setAttribute("errorReason", e.getMessage());
 			request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
 					.forward(request, response);
 			return;
 
 		}catch (NullPointerException e) {
-			
 			request.setAttribute("errorReason","バックキーを使わず、戻るボタンを使用してください" );
 			request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
 					.forward(request, response);
 			return;
 			
 		}catch (Exception e) {
-
-			
 			request.setAttribute("errorReason", "キャンセル処理に失敗しました。");
 			request.getRequestDispatcher("/jsp/cancel/cancelError.jsp")
 					.forward(request, response);

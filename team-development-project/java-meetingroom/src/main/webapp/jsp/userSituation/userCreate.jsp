@@ -28,17 +28,17 @@
 		<form action="<%= request.getContextPath() %>/CreateUser" method="POST">
 			<div class="input-user">
 				<span class="user-name">氏名：</span>
-				<input type="text" name="name" placeholder="田中太郎" value="${user != null ? user.name : ''}" required>
+				<input type="text" name="name" placeholder="インテックス太郎" maxlength="10" pattern=".*\S+.*" value="${user != null ? user.name : ''}" required>
 			</div>
 
 			<div class="input-user">
 				<span class="user-name">出生年：</span>
-				<input type="text" name="birthYear" maxlength="4" pattern="[0-9]*" placeholder="2000" value="${user.birthYear != null ? user.birthYear : ''}" required>
+				<input type="text" name="birthYear" maxlength="4" pattern="[0-9]{4}" placeholder="(西暦)1998" value="${user.birthYear != null ? user.birthYear : ''}" required>
 			</div>
 
 			<div class="input-user">
 				<span class="user-name">住所：</span>
-				<input type="text" name="address" value="${user != null ? user.address : ''}" required>
+				<input type="text" name="address" pattern=".*\S+.*" maxlength="30" value="${user != null ? user.address : ''}" required>
 			</div>
 
 			<div class="input-user">

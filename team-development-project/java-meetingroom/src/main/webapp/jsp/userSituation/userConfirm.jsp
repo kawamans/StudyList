@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <c:set var="pageName" value="${sessionScope.page}" />
+
+<%-- Servlet元の種類に応じて表示と遷移先ページを切替 --%>
 <c:choose> 
 	<c:when test="${pageName == 'create'}">
 		<c:set var="message" value="登録確認" />
@@ -82,9 +84,9 @@
 				<div class="input-user">
 					<span class="user-name">管理者権限：</span>
 					<span class="user-data">${user.adminflg == "1" ? "あり" : "なし"}</span>
-					<input type="hidden" name="adminflg" value="${user.adminflg == '1' ? '1' : '0'}">
 				</div>
 			</c:if>
+			<input type="hidden" name="adminflg" value="${user.adminflg == '1' ? '1' : '0'}">
 			
 			<div class="button3">
 				<button type="button" onclick="location.href='<%= request.getContextPath() %>${nextPage}'">戻る</button>

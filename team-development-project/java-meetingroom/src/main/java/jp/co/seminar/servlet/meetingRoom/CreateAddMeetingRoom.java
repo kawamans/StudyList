@@ -16,8 +16,9 @@ import jp.co.seminar.bean.RoomBean;
 import jp.co.seminar.dao.RoomDao;
 
 /**
+ * @author 猪本
  * 会議室登録
- * 遷移先は会議室確認JSP*/
+ * */
 
 @WebServlet("/CreateAddMeetingRoom")
 public class CreateAddMeetingRoom extends HttpServlet {

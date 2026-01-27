@@ -15,9 +15,6 @@ import jp.co.seminar.bean.ReservationBean;
 
 /**
  * 予約を登録する。
- * 予約成功時は予約完了画面に遷移し、例外を補足した場合は、
- * 例外メッセージをリクエスト属性にセットして、
- * 予約エラー画面に遷移する。
  * @author 石坂迪大
  */
 
@@ -39,16 +36,16 @@ public class ReserveServlet extends HttpServlet {
 		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
 		ReservationBean reservation = (ReservationBean) session.getAttribute("reserve");
 		
-		//予約情報 登録
+		//予約 登録
 		try {
-			//予約情報登録
+			//登録処理
 			meetingRoom.reserve(reservation);
 			//登録成功時
 			response.sendRedirect(request.getContextPath() +
 									"/jsp/reservation/reserved.jsp");
 				return;
 				
-		//予約登録に失敗した場合の例外
+		//登録に失敗した場合の例外
 		} catch (AppException.ReservationFailedException e) {
 			e.printStackTrace();
 			request.setAttribute("errorReason", e.getMessage());
@@ -88,7 +85,4 @@ public class ReserveServlet extends HttpServlet {
 			return;
 		}
 	}
-=======
-	
->>>>>>> 3574cd1e0f7a1e5c5efc7664aa7b3ac912d1437e
 }

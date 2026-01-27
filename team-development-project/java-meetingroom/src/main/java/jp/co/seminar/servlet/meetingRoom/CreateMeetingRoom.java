@@ -13,8 +13,9 @@ import jp.co.seminar.bean.ExtraMR;
 import jp.co.seminar.bean.RoomBean;
 
 /**
+ * @author 猪本
  * 会議室生成
- * 遷移先は会議室確認JSPかエラーJSP*/
+ * */
 @WebServlet("/CreateMeetingRoom")
 public class CreateMeetingRoom extends HttpServlet {
 	private static final long serialVersionUID = 1L;
