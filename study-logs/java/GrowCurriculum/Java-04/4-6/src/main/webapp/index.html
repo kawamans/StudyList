@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>社員情報システム</title>
+	<link rel="stylesheet" type="text/css" href="./css/index.css">
+</head>
+<body>
+  <!-- 問① フォームの遷移先を設定して下さい -->
+  <form action="search" method="post">
+    <div class="wrapper">
+      <div class="header">社員情報システム</div>
+        <ul>
+          <!-- ID入力欄 -->
+          <li class="id">
+	          <label for="id">ID</label>
+	          <input type="text" name="id" value="" size="20">
+          </li>
+          <!-- 問② パスワードを入力する欄を作成してください -->
+		  <li class="password">
+			  <label for="password">password</label>
+			  <input type="password" name="password" value="" size="20">
+		  </li>
+
+          <!-- 検索ボタン -->
+          <li><input id="button" type="submit" name="button" value="検索"></li>
+        </ul>
+      <div class="footer">Java.Inc</div>
+    </div>
+  </form>
+</body>
+</html>
+
