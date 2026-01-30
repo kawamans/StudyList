@@ -1,0 +1,29 @@
+# ビルド成果物 
+/bin/ 
+/build/ 
+/dist/ 
+
+# Eclipse 固有設定 
+.settings/ 
+.project
+.classpath
+.settings/
+
+# OS依存ファイル 
+Thumbs.db 
+
+# ログ・一時ファイル 
+*.log 
+*.tmp
+
+# Eclipseのワークスペース設定（最優先）
+.metadata/
+.recommenders/
+
+# テスト実行時やサーバー起動時の生成物
+remote-systems-temp-files/
+Servers/
+
+# Webプロジェクト（WTP）用の中間ファイル
+.externalToolBuilders/
+*.launch

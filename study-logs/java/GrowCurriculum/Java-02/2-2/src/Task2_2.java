@@ -1,0 +1,41 @@
+/**
+ * Task2_2 : 課題内容
+ *
+ * 本課題では、配列の使い方を学んでいきましょう。
+ * 問①から問⑥まであります。
+ * 指定された値と変数名を守って記述して下さい。
+ *
+ */
+public class Task2_2 {
+
+    public static void main(String[] args) {
+
+        // ①String型の「JAPAN」、「AMERICA」、「KOREA」を要素の値（初期値）とする配列 countryを作成して下さい。
+    		String[] country = {"JAPAN", "AMERICA", "KOREA"};
+    	
+        // ② ①で作成した配列の要素数を出力して下さい。
+    		System.out.println(country.length);
+    		
+        // ③ ①で作成した配列countryの中から｢KOREA｣を出力して下さい。
+    		System.out.println(country[2]);
+    		
+        // ④int型の「10」、「20」、「30」、「40」、「50」を要素の値（初期値）とする配列 intArrayを作成して下さい。
+    		int[] intArray = {10, 20, 30, 40, 50};
+    		
+        // ⑤ ④で作成した配列の要素数を出力して下さい。
+    		System.out.println(intArray.length);
+    		
+        // ⑥ ④で作成した配列intArrayの中から｢10｣を出力して下さい。
+    		System.out.println(intArray[0]);
+
+    }
+}
+
+/* コンソール出力結果↓
+
+3
+KOREA
+5
+10
+
+ */

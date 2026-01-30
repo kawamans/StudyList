@@ -1,0 +1,39 @@
+<!-- ← ここでは、HTML5を使うと宣言-->
+<!DOCTYPE html>
+<!-- 「lang="ja"」は日本語を使用するという宣言 -->
+<html lang="ja">
+<!--headエリアに文字コードやHTMLのタイトルを記述します。-->
+<head>
+    <!-- 文字コードの形式を指定 -->
+    <meta charset="UTF-8">
+    <!--HTMLのタイトルを記入。ブラウザのタブに表示したい文字を記述-->
+    <title>divパズル</title>
+    <!-- reset.cssの呼び出し。基本的にはCSSの一番最初に呼び出します。 -->
+    <link rel="stylesheet" type="text/css" href="./css/reset.css">
+    <!-- ここでindex.cssを呼び出し。このindex.html専用のCSS。 -->
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+</head>
+<!-- ← いよいよここからHTMLを記載！ -->
+<body>
+    <!-- class属性の値は任意だが、わかりやすい名前にする。今回は以下。 -->
+    <div class="wrapper">
+        <div class="header"></div>
+        <div class="main">
+			<div class="right-object">
+            		<div class="left"></div>
+				<div class="right-block">
+					<div class="right-parts">
+						<div class="object1">
+							<div class="center1"></div>
+							<div class="center2"></div>
+						</div>
+						<div class="center-right"></div>
+					</div>
+					<div class="right"></div>
+				</div>
+			</div>
+        </div>
+        <div class="footer"></div>
+    </div>
+</body>
+</html>
