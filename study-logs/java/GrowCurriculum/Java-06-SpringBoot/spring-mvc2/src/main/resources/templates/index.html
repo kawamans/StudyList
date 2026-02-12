@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="thhp://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+	<div>
+		<h4>お問い合わせ</h4>
+		<p>入力してください</p>
+		<form th:action="@{/}" th:object="${inquiry}" method="post" novalidate>
+			
+			<label for="name">お名前</label><br>
+			<input type="text" th:errorclass="is-invalid" th:field="*{name}" />
+			<div th:errors="*{name}"></div><br>
+			
+			<label for="*{email}">メールアドレス</label><br>
+			<input type="text" th:errorclass="is-invalid" th:field="*{email}" />
+			<div th:errors="*{email}"></div><br>
+			
+			<label for="*{inquiry}">お問い合わせ</label><br>
+			<textarea rows="3" th:errorclass="is-invalid" th:field="*{inquiry}"></textarea>
+			<div th:errors="*{inquiry}"></div><br>
+			
+			<button type="submit">登録</button>
+		</form>
+	</div>
+</body>
+</html>

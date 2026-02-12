@@ -1,0 +1,15 @@
+# === Eclipse and Environment-specific files ===
+.settings/
+.project
+.classpath
+.metadata/
+Servers/
+
+# === Compiled Class files ===
+bin/
+build/
+*.class
+
+# === OS specific files ===
+.DS_Store
+Thumbs.db

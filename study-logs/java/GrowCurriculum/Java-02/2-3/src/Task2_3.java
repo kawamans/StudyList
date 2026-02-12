@@ -1,0 +1,49 @@
+/**
+ * Task2_3 : 課題内容
+ *
+ * 本課題では、演算子の使い方を学んでいきましょう。
+ * 問①から問⑥まであります。
+ * 指定された数値、式、変数名を守って記述してください。
+ *
+ */
+public class Task2_3 {
+
+    public static void main(String[] args) {
+
+        // ① 5 と 10 を加算した値を代入する、変数 plus を作成して下さい。
+    		int plus = 5 + 10;
+
+        // ② 20 から 7 を減算した値を代入する、変数 minus を作成して下さい。
+    		int minus = 20 - 7;
+    		
+        // ③ 10 と 2 を乗算した値を代入する、変数 multiply を作成して下さい。
+    		int multiply = 10 * 2;
+    		
+    		// ④ 20 を 6 で割った余りを代入する、変数 remi を作成して下さい。
+    		int remi = 20 % 6;
+
+        // 以下の2つの変数に、自分の名字と名前を代入して下さい。(日本語でも英語でもOK)
+        String lastName = "川満"; //名字を代入
+        String firstName = "達也"; //下の名前を代入
+
+        // ⑤上記で作成した変数を連結させた値を代入する変数 fullName を作成して下さい。
+        String fullName = lastName + firstName;
+        
+        // ⑥ 変数plus, minus, multiply, remi, fullName をそれぞれ出力して下さい。
+        System.out.println(plus);
+        System.out.println(minus);
+        System.out.println(multiply);
+        System.out.println(remi);
+        System.out.println(fullName);
+    }
+}
+
+/* コンソール出力結果↓
+
+15
+13
+20
+2
+山田太郎
+
+ */

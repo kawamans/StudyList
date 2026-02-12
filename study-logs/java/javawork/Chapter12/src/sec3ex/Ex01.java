@@ -1,0 +1,17 @@
+package sec3ex;
+
+public class Ex01 {
+
+	public static void main(String[] args) {
+		int[] a = {1, 2, 3};
+		
+		try {
+			for(int i = 0; i < 5; i++) {
+				System.out.println(a[i]);
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.err.println("配列参照エラー");
+		} 
+	}
+
+}

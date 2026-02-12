@@ -1,0 +1,308 @@
+/* すべてのページに適用される設定 */
+html {
+    font-size: 16px;
+    font-family: serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0 0 0 0;
+}
+
+p, tr {
+    line-height: 1.5;
+}
+
+a:link {
+    color: #f6ad49;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #f6ad49;
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(16, 255, 179);
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* すべてのページに適用 - ヘッダー */
+.nav ul {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 0 0;
+    gap: 30px;
+    padding: 0;
+    list-style-type: none;
+}
+
+/* すべてのページに適用 - ヒーロー */
+.hero {
+    background-repeat: no-repeat;
+    text-align: center;
+    -webkit-text-stroke-width: 0.2px;
+    -webkit-text-stroke-color: black;
+    background-size: cover;
+    color: white;
+    object-fit: cover;
+    padding: 130px 0;
+}
+
+.hero.index {
+    background-image: url(../images/izakaya-hero.jpeg);
+    padding: 300px 0;
+}
+
+.hero.irodori {
+    background-image: url(../images/irodori.img/irodori-1.webp);
+}
+
+.hero.urizun {
+    background-image: url(../images/urizun.img/urizun-1.webp);
+    background-position: center
+}
+
+.hero.kaien {
+    background-image: url(../images/kaien.img/kaien-1.webp);
+    background-position: center
+}
+
+.hero.stamina {
+    background-image: url(../images/stamina.img/stamina-1.webp);
+    background-position: center;
+}
+
+.hero.tonchan {
+    background-image: url(../images/tonchan/tonchan-1.webp);
+}
+
+.hero.la_porche {
+    background-image: url(../images/la_porche.img/la_porche-1.webp);
+    background-position: center;
+}
+
+.hero.kanikichi {
+    background-image: url(../images/kanikichi.img/kanikichi-1.webp);
+    background-position: center;
+}
+
+.hero.nagomi {
+    background-image: url(../images/nagomi.img/nagomi-1.webp);
+    background-position: center;
+}
+
+.hero.roof{
+    background-image: url(../images/roof.img/roof-1.webp);
+    background-position: center;
+}
+
+.hero.lokanta {
+    background-image: url(../images/lokanta.img/lokanta-1.webp);
+    background-position: center;
+}
+
+.hero.pone {
+    background-image: url(../images/pone.img/pone-1.webp);
+    background-position: center;
+}
+
+.hero.dice {
+    background-image: url(../images/dice.img/dice-1.webp);
+    background-position: center;
+}
+
+.hero.yoshino {
+    background-image: url(../images/yoshino.img/yoshino-1.webp);
+    background-position: center;
+}
+
+/* すべてのページに適用 - メイン */
+main {
+    margin: 75px auto 75px auto;
+    max-width: 1000px;
+}
+
+.main-top {
+    margin: 75px auto 75px auto;
+}
+
+main h3{
+    margin: 25px 0 1px 0;
+    color: #f6ad49;
+    font-size: 1.5rem;
+}
+
+main h2 {
+    margin: 75px 0 25px 0;
+    color: #f6ad49;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #f6ad49;
+}   
+
+.shops {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    text-align: center;
+}
+
+.shop-img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border: 1px solid#111;
+}
+
+.all-imgs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0px;
+    text-align: center;
+}
+
+.all-img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+.sakegatya-img {
+    height: 700px;
+    width: 100%;
+    margin: 50px auto 50px auto;
+    object-fit: cover;
+    object-position: bottom;
+}
+
+
+/* すべてのページに適用 - フッター */
+.back-top {
+    text-align: center;
+}
+
+.copyrighit {
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: #fff352;
+    color: black;
+    text-align: center;
+}
+
+/* 個別のスタイル */
+.shop-text {
+    text-align: left;
+}
+
+/* index.html */
+.all {
+border-collapse: collapse;
+}
+
+.all th, .all td {
+    width: 150px;
+    border: solid 1px #f6ad49;
+    text-align: center;
+    height: 30px;
+}
+
+.all th {
+    width: 300px;
+    vertical-align: middle;
+}
+
+.all td {
+    width: 350px;
+}
+
+/* shop-info */
+
+.shop-info {
+    text-align: center
+}
+
+.shop-imags {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.shop-info-img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border: 1px solid#111;
+}
+
+.info-text {
+    border-collapse: collapse;
+    width: 70%;
+    margin: auto;
+    margin: 75px auto 50px auto;
+}
+
+.info-text th, .info-text td {
+    width: 150px;
+    text-align: center;
+    height: 30px;
+}
+
+.info-text th {
+    width: 100px;
+    vertical-align: middle;
+}
+
+.info-text td {
+    width: 700px;
+    text-align: left;
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+    .nav ul {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    main {
+        padding: 0 4%;
+    }
+
+    .hero {
+        padding: 13vh 0;
+    }
+
+    .hero.index {
+       padding: 30vh 0;
+    }
+
+    .all-imgs {
+        grid-template-columns: 1fr;
+    }
+
+    .shops {
+        grid-template-columns: 1fr;
+    }
+
+    .shop-img {
+        height: 50vh;
+    }
+
+    .all-img {
+        height: 50vh;
+    }
+
+    .sakegatya-img {
+    height: 50vh;
+    }
+
+}

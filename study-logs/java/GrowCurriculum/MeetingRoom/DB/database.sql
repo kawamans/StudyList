@@ -1,0 +1,31 @@
+DROP TABLE IF EXISTS member CASCADE;
+DROP TABLE IF EXISTS room CASCADE;
+DROP TABLE IF EXISTS reservation CASCADE;
+
+CREATE TABLE member (
+	id VARCHAR(7) PRIMARY KEY,
+	password VARCHAR(10) NOT NULL,
+	name VARCHAR(10),
+	address VARCHAR(30),
+	deleteFlg BOOLEAN NOT NULL DEFAULT FALSE,
+	adminFlg BOOLEAN NOT NULL DEFAULT FALSE
+
+);
+
+CREATE TABLE room (
+	id VARCHAR(4) PRIMARY KEY,
+	name VARCHAR(20)
+);
+
+CREATE TABLE reservation (
+	id SERIAL PRIMARY KEY,
+	roomid VARCHAR(4) NOT NULL,
+	date DATE NOT NULL,
+	start_time TIME NOT NULL,
+	end_time TIME NOT NULL,
+	memberid VARCHAR(7) NOT NULL,
+	FOREIGN KEY(roomid) REFERENCES room(id) ON DELETE CASCADE,
+	FOREIGN KEY(memberid) REFERENCES member(id),
+	UNIQUE(roomid, date, start_time)
+);
+

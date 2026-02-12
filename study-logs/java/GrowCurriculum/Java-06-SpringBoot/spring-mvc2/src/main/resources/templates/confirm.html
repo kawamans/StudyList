@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+	<div th:object="${inquiry}">
+		<h4>お問い合わせ</h4>
+		<p>以下の内容で登録しました</p>
+		<div>
+			<label for="name">お名前</label><br>
+			<input type="text" th:field="*{name}" disabled />
+		</div>
+		
+		<div>
+			<label for="email">メールアドレス</label><br>
+			<input type="text" th:field="*{email}" disabled />
+		</div>
+		
+		<div>
+			<label for="inquiry">お問い合わせ</label><br>
+			<textarea rows="3" th:field="*{inquiry}" disabled></textarea>
+		</div>
+	</div>
+</body>
+</html>

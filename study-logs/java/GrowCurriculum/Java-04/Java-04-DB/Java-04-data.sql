@@ -1,0 +1,70 @@
+INSERT INTO Staff VALUES('0001','鈴木一郎',1995,'人事部');
+INSERT INTO Staff VALUES('0002','鈴木次郎',1995,'経理部');
+INSERT INTO Staff VALUES('0003','田中健一',1995,'営業部');
+INSERT INTO Staff VALUES('0004','佐藤健二',1999,'総務部');
+INSERT INTO Staff VALUES('0005','雪村花子',2000,'経理部');
+INSERT INTO Staff VALUES('0006','草野由紀',2003,'営業部');
+INSERT INTO Staff VALUES('9999','テスト',NULL,NULL);
+
+INSERT INTO Area VALUES('01','北海道');
+INSERT INTO Area VALUES('02','東北');
+INSERT INTO Area VALUES('03','信越');
+INSERT INTO Area VALUES('04','関東');
+INSERT INTO Area VALUES('05','北陸');
+INSERT INTO Area VALUES('06','東海');
+INSERT INTO Area VALUES('07','近畿');
+INSERT INTO Area VALUES('08','中国');
+INSERT INTO Area VALUES('09','四国');
+INSERT INTO Area VALUES('10','九州');
+INSERT INTO Area VALUES('11','沖縄');
+INSERT INTO Area VALUES('12','海外');
+
+INSERT INTO Shop VALUES('001','新宿','SHINJUKU','04', '2000-01-01');
+INSERT INTO Shop VALUES('002','横浜','YOKOHAMA','04', '2003-04-01');
+INSERT INTO Shop VALUES('003','福岡','FUKUOKA','10', '2005-08-10');
+INSERT INTO Shop VALUES('004','松山','MATSUYAMA','09', '2005-08-10');
+INSERT INTO Shop VALUES('005','ロンドン','LONDON','12', '2005-12-31');
+
+INSERT INTO Goods VALUES('1001','ベスト','7800', '2004-09-15');
+INSERT INTO Goods VALUES('1002','セーター','12800', '2003-03-30');
+INSERT INTO Goods VALUES('1003','ボレロ','5500', '2004-09-15');
+INSERT INTO Goods VALUES('2001','パイロット帽','4000', '2000-01-01');
+INSERT INTO Goods VALUES('2002','とんがり帽','3000', '2000-01-01');
+INSERT INTO Goods VALUES('3001','手袋','2000', '2000-10-30');
+INSERT INTO Goods VALUES('3002','手袋（指なし）','2000', '2000-10-30');
+
+INSERT INTO Stocks VALUES('1001','001',20, current_date);
+INSERT INTO Stocks VALUES('1002','001',25, current_date);
+INSERT INTO Stocks VALUES('1003','001',10, current_date);
+INSERT INTO Stocks VALUES('2001','002',5, current_date);
+INSERT INTO Stocks VALUES('2002','002',12, current_date);
+INSERT INTO Stocks VALUES('1002','002',14, current_date);
+INSERT INTO Stocks VALUES('2001','003',2, current_date);
+INSERT INTO Stocks VALUES('2002','003',1, current_date);
+INSERT INTO Stocks VALUES('3001','003',18, current_date);
+INSERT INTO Stocks VALUES('3002','003',9, current_date);
+INSERT INTO Stocks VALUES('1001','005',5, current_date);
+INSERT INTO Stocks VALUES('1002','005',0, current_date);
+INSERT INTO Stocks VALUES('1003','005',30, current_date);
+INSERT INTO Stocks VALUES('3001','005',22, current_date);
+INSERT INTO Stocks VALUES('3002','005',10, current_date);
+
+INSERT INTO Purchaser VALUES('0501','辛順勲','東京都新宿区','0300000000');
+INSERT INTO Purchaser VALUES('0502','太宰満天','大分県別府市','0890000000');
+INSERT INTO Purchaser VALUES('0503','豊臣秀子','神奈川県小田原市','0480000000');
+INSERT INTO Purchaser VALUES('0504','John Devon','Buckingham Palace Road London','02073212233');
+INSERT INTO Purchaser VALUES('0505','瀬田茅','東京都世田谷区','0330000000');
+
+INSERT INTO Order_Header VALUES(420,'0504','005',TO_DATE('2000-05-23','YYYY-MM-DD'),4000);
+INSERT INTO Order_Header VALUES(421,'0505','001',TO_DATE('2005-01-31','YYYY-MM-DD'),12800);
+INSERT INTO Order_Header VALUES(422,'0501','002',TO_DATE('2005-02-06','YYYY-MM-DD'),8000);
+INSERT INTO Order_Header VALUES(423,'0505','002',TO_DATE('2005-04-01','YYYY-MM-DD'),9500);
+
+INSERT INTO Order_detail VALUES(420,1,'3001',1,2000);
+INSERT INTO Order_detail VALUES(420,2,'3002',1,2000);
+INSERT INTO Order_detail VALUES(421,1,'1002',1,12800);
+INSERT INTO Order_detail VALUES(422,1,'2001',2,8000);
+INSERT INTO Order_detail VALUES(423,1,'1003',2,5500);
+INSERT INTO Order_detail VALUES(423,2,'2001',2,4000);
+
+commit;

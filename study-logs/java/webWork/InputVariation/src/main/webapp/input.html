@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>入力画面</title>
+</head>
+<body>
+	<form action="PrintServlet" method="GET">
+		氏名：<input type="text" name="name" value="-"><br>
+		性別：<br>
+		<input type="radio" name="gender" value="male" checked="checked">男性
+		<input type="radio" name="gender" value="female">女性
+		<input type="radio" name="gender" value="other">その他<br>
+		趣味（複数回答可）：<br>
+		<input type="checkbox" name="pleasure" value="reading">読書
+		<input type="checkbox" name="pleasure" value="traveling">旅行
+		<input type="checkbox" name="pleasure" value="shopping">買物
+		<input type="checkbox" name="pleasure" value="cooking">料理<br>
+		<input type="submit" value="送信">
+		<input type="reset" value="クリア">
+	</form>
+</body>
+</html>

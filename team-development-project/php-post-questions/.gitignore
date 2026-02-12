@@ -1,0 +1,30 @@
+#--------------------------------------------
+# 除外リスト
+#--------------------------------------------
+# 依存関係
+/vendor
+/node_modules
+
+# ビルド・キャッシュ
+/dist
+/build
+/cache
+/tmp
+
+# 環境設定ファイル（機密情報を含むため必須）
+.env
+.env.*
+!.env.example # テンプレートファイルは追跡する場合があります
+
+# ログファイル
+*.log
+
+# OS固有ファイル
+.DS_Store
+Thumbs.db
+
+# IDE/エディタ設定
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
